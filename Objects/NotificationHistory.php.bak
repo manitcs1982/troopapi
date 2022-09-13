@@ -1,0 +1,194 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+class NotificationHistory{
+		private $conn;
+		public  $notificationHistoryId;
+		public  $customerId;
+		public  $vendorId;
+		public  $logisticsId;
+		public  $title;
+		public  $message;		
+		public  $isActive;
+		public  $createdOn;
+		public  $modifiedOn;
+        public  $type;
+        public $nativeMessage;
+        public $nativeTitle;
+        public $serviceId;
+
+		// Assigning the DB connection
+		public function __construct($db){
+			$this->conn = $db;
+			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		}
+				
+	//GetNotificationHistoryByCustomerId
+    public function GetNotificationHistoryByCustomerId(){			
+        try{
+             
+            $sql = "select * from Notification_History where NFH_CSR_GPK= :customerId"; //and PIN_status=1
+            $result = $this->conn->prepare($sql);
+            
+            $this->customerId=htmlspecialchars(strip_tags($this->customerId));		
+            $result->bindParam(":customerId", $this->customerId);
+            
+            $result->execute();
+            return $result;
+        }catch(PDOException $e){
+            $this->error = "Error: ".$e->getMessage();
+            return false;
+        }
+    }
+
+    //GetNotificationHistoryByvendorId
+    public function GetNotificationHistoryByVendorId(){			
+        try{
+            
+            $sql = "select * from Notification_History where NFH_VDR_GPK= :vendorId"; //and PIN_status=1
+            $result = $this->conn->prepare($sql);
+            
+            $this->vendorId=htmlspecialchars(strip_tags($this->vendorId));		
+            $result->bindParam(":vendorId", $this->vendorId);
+            
+            $result->execute();
+            return $result;
+        }catch(PDOException $e){
+            $this->error = "Error: ".$e->getMessage();
+            return false;
+        }
+    }
+
+
+
+
+    
+    //GetNotificationHistoryBylogisticsId
+    public function GetNotificationHistoryByLogisticsId(){			
+        try{
+            
+            $sql = "select * from Notification_History where NFH_LGT_GPK= :logisticsId"; //and PIN_status=1
+            $result = $this->conn->prepare($sql);
+            
+            $this->logisticsId=htmlspecialchars(strip_tags($this->logisticsId));		
+            $result->bindParam(":logisticsId", $this->logisticsId);
+            
+            $result->execute();
+            return $result;
+        }catch(PDOException $e){
+            $this->error = "Error: ".$e->getMessage();
+            return false;
+        }
+    }
+
+
+    
+
+
+//Inserting NotificationHistory{
+    public function InsertNotificationHistory(){			
+        try{
+            
+            $sql = "Insert into Notification_History Set NFH_SVC_GFK=:serviceId,NFH_CSR_GPK=:customerId,NFH_VDR_GPK=:vendorId,NFH_LGT_GPK=:logisticsId,NFH_title=:title,NFH_message=:message,NFH_isActive=:isActive,NFH_createdOn=:createdOn,NFH_modifiedOn=:modifiedOn,NFH_type=:type,NFH_nativeTitle=:nativeitle,NFH_nativeMessage=:nativeMessage";
+            
+            $result = $this->conn->prepare($sql);
+            
+            $this->customerId=htmlspecialchars(strip_tags($this->customerId));
+            $result->bindParam(":customerId", $this->customerId);
+            
+            $this->vendorId=htmlspecialchars(strip_tags($this->vendorId));
+            $result->bindParam(":vendorId", $this->vendorId);
+            
+            $this->logisticsId=htmlspecialchars(strip_tags($this->logisticsId));
+            $result->bindParam(":logisticsId", $this->logisticsId);
+            
+            $this->serviceId=htmlspecialchars(strip_tags($this->serviceId));
+            $result->bindParam(":serviceId", $this->serviceId);
+            
+            $this->title=htmlspecialchars(strip_tags($this->title));
+            $result->bindParam(":title", $this->title);
+            
+            $this->message=htmlspecialchars(strip_tags($this->message));
+            $result->bindParam(":message", $this->message);
+            
+            $this->nativeTitle=htmlspecialchars(strip_tags($this->nativeTitle));
+            $result->bindParam(":nativeTitle", $this->nativeTitle);
+            
+            $this->nativeMessage=htmlspecialchars(strip_tags($this->nativeMessage));
+            $result->bindParam(":nativeMessage", $this->nativeMessage);
+            
+            $this->isActive=htmlspecialchars(strip_tags($this->isActive));
+            $result->bindParam(":isActive", $this->isActive);
+          
+            $this->createdOn=htmlspecialchars(strip_tags($this->createdOn));
+            $result->bindParam(":createdOn", $this->createdOn);
+
+            $this->modifiedOn=htmlspecialchars(strip_tags($this->modifiedOn));
+            $result->bindParam(":modifiedOn", $this->modifiedOn);
+
+            $this->type=htmlspecialchars(strip_tags($this->type));
+            $result->bindParam(":type", $this->type);
+            
+            $result->execute();
+            $this->notificationHistoryId = $this->conn->lastInsertId(); 											  			
+            return true;
+        }catch(PDOException $e){
+            $this->error = "Error: ".$e->getMessage();
+            return false;
+        }
+    }
+    
+    public function UpdateNotificationHistoryStatus(){			
+        try{
+            
+            $sql = "Update Notification_History Set NFH_isActive=0,NFH_modifiedOn=:modifiedOn where NFH_SVC_GFK=:serviceId";
+            
+            $result = $this->conn->prepare($sql);
+            
+            $this->serviceId=htmlspecialchars(strip_tags($this->serviceId));
+            $result->bindParam(":serviceId", $this->serviceId);
+                        
+            $this->modifiedOn=htmlspecialchars(strip_tags($this->modifiedOn));
+            $result->bindParam(":modifiedOn", $this->modifiedOn);
+
+            $result->execute();
+            $this->notificationHistoryId = $this->conn->lastInsertId(); 											  			
+            return true;
+        }catch(PDOException $e){
+            $this->error = "Error: ".$e->getMessage();
+            return false;
+        }
+    }
+    
+    public function ReadNotification(){			
+        try{
+            
+            $sql = "Update Notification_History Set NFH_isRead=1,NFH_modifiedOn=:modifiedOn where find_in_set(NFH_GPK,:notificationHistoryId)";//
+            
+            $result = $this->conn->prepare($sql);
+            
+            $this->notificationHistoryId=htmlspecialchars(strip_tags($this->notificationHistoryId));
+            $result->bindParam(":notificationHistoryId", $this->notificationHistoryId);
+                        
+            $this->modifiedOn=htmlspecialchars(strip_tags($this->modifiedOn));
+            $result->bindParam(":modifiedOn", $this->modifiedOn);
+
+            $result->execute();
+            $this->notificationHistoryId = $this->conn->lastInsertId(); 											  			
+            return true;
+        }catch(PDOException $e){
+            $this->error = "Error: ".$e->getMessage();
+            return false;
+        }
+    }
+
+}
+?>
+				
+				
+				
+				
+				
+				

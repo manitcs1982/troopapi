@@ -1,0 +1,382 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+include_once '../Config/database.php';
+include_once '../Objects/Service.php';
+include_once '../Common/ImageUploadToDisk.php';
+
+$database = new Database(); //Declaring object for database class
+
+$data = json_decode(file_get_contents("php://input")); //Recieving input data
+
+$db = $database->GetServiceConnection();
+$service = new Service($db);
+$service->serviceId = $data->serviceId;
+$service->status = $data->status;
+$service->logisticsId = $data->logisticsId;
+$service->customerId = $data->customerId;
+$service->vendorId = $data->vendorId;
+
+$service->cancelledBy = $data->cancelledBy;
+$service->cancelledStatus = $data->cancelledStatus;
+
+$service->modifiedOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())));
+
+$service->referenceNumber = $data->referenceNumber;
+$service->appliance = strtoupper(urlencode($data->appliance));
+if(strtoupper($data->status)==strtoupper('cancelled')){
+	$service->isCancelled = 1;	
+	$result = $service->UpdateCancelStatus();
+}else{
+	$result = $service->UpdateServiceStatus();
+}
+
+if($service->cancelledBy=='v'){
+	$db = $database->GetServiceConnection();	
+	$service->serviceId = $service->serviceId;	
+	$service->customerTotal = 0;
+	$service->vendorTotal = 0;
+	$service->customerDisplayPrice = 0;	
+	$service->deliveryFee = 70.8;
+	$service->serviceCharge = 0;	
+	$service->GSTAmount = 0;	//already added
+	$service->customerGrandTotal = $service->deliveryFee;	
+	$service->customerDisplayTotal = 0;
+	$service->modifiedOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())));
+
+	$result = $service->UpdateServiceAmount();
+}
+if ($result) {
+	
+	$url = $apiRootPath.'InsertServiceStatus.php';
+	  
+	$apiData = array("serviceId" => $service->serviceId, "status" => $service->status, "logisticsId" => $service->logisticsId);		
+	$options = array(
+	    'http' => array(
+		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+	        'method'  => 'POST',
+	        'content' => json_encode($apiData), 
+	    ),
+	);			
+	$context  = stream_context_create($options);
+	$result = file_get_contents($url, false, $context);			
+	
+	if ($service->status=='picked_from_customer') {
+		//Firebase Notification
+		$url = $apiRootPath.'PassPushNotification.php?type=picked_from_customer&customerId='.$service->customerId.'&referenceNumber='.$service->referenceNumber.'&appliance='.$service->appliance;
+		$options = array(
+		'http' => array(
+		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+		'method'  => 'GET',
+		),
+		);
+		$context  = stream_context_create($options);
+		$result = json_decode(file_get_contents($url, false, $context));	
+
+		//InsertNotificationHistory
+		$url = $apiRootPath.'InsertNotificationHistory.php';
+	
+		$data = array("serviceId" => $service->serviceId, "status" => $service->status, "customerId" => $service->customerId, "title" => $result->title,"vendorId"=>0,"message" => $result->notificationMessage,"logisticsId"=>0,"type"=>"picked_from_customer","isActive"=>1,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage);		
+		$options = array(
+			'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+			'content' => json_encode($data), 
+			),
+		);			
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);
+	} else if ($service->status=='under_inspection') {
+		//Firebase Notification
+		$url = $apiRootPath.'PassPushNotification.php?type=under_inspection_vendor&vendorId='.$service->vendorId.'&referenceNumber='.$service->referenceNumber.'&appliance='.$service->appliance;
+		$options = array(
+		'http' => array(
+		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+		'method'  => 'GET',
+		),
+		);
+		$context  = stream_context_create($options);
+		$result = json_decode(file_get_contents($url, false, $context));	
+
+      	//InsertNotificationHistory
+		$url = $apiRootPath.'InsertNotificationHistory.php';
+	
+		$apiData = array("serviceId" => $service->serviceId, "status" => $service->status,"type"=>"under_inspection_vendor" ,"vendorId" => $service->vendorId, "title" => $result->title,"message" => $result->notificationMessage,"logisticsId"=>0,"customerId" =>0,"isActive"=>1,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage);		
+		$options = array(
+			'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => json_encode($apiData), 
+			),
+		);			
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);
+		
+		
+		$customerArray = array();
+		$customerArray = explode(",",$service->customerId);
+		$applianceArray = array();
+		$applianceArray = explode("%2C",$service->appliance);
+		$referenceNumberArray = array();
+		$referenceNumberArray = explode(",",$service->referenceNumber);
+		$serviceIdArray = array();
+		$serviceIdArray = explode(",",$service->serviceId);
+		foreach ($customerArray as $key=>$customerId) {
+
+			$url = $apiRootPath.'PassPushNotification.php?type=under_inspection_customer&customerId='.$customerId.'&referenceNumber='.$referenceNumberArray[$key].'&appliance='.$applianceArray[$key];
+			$options = array(
+			'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			'method'  => 'GET',
+			),
+			);
+			$context  = stream_context_create($options);
+			$result = json_decode(file_get_contents($url, false, $context));	
+			
+			
+			//InsertNotificationHistory
+			$url = $apiRootPath.'InsertNotificationHistory.php';
+	
+			$apiData = array("serviceId" => $serviceIdArray[$key], "status" => $service->status, "customerId" => $customerId,"vendorId"=>0,"logisticsId"=>0,"type"=>"under_inspection_customer", "title" => $result->title,"message" => $result->notificationMessage,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage,"isActive"=>1,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage);		
+			$options = array(
+				'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => json_encode($apiData), 
+				),
+			);			
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);			
+		}
+	
+	} else if ($service->status=='awaiting_for_confirmation') {
+		//Firebase Notification
+		$url = $apiRootPath.'PassPushNotification.php?type=awaiting_for_confirmation&customerId='.$service->customerId.'&referenceNumber='.$service->referenceNumber.'&appliance='.$service->appliance;
+		$options = array(
+		'http' => array(
+		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+		'method'  => 'GET',
+		),
+		);
+		$context  = stream_context_create($options);
+		$result = json_decode(file_get_contents($url, false, $context));	
+		
+		
+		//InsertNotificationHistory
+			$url = $apiRootPath.'InsertNotificationHistory.php';
+	
+			$apiData = array("serviceId" => $service->serviceId, "status" => $service->status, "type"=>"awaiting_for_confirmation","customerId" => $service->customerId,"vendorId"=>0,"logisticsId"=>0, "title" => $result->title,"message" => $result->notificationMessage,"isActive"=>1,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage);		
+			$options = array(
+				'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => json_encode($apiData), 
+				),
+			);			
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);
+	} else if ($service->status=='ready_to_fixed') {
+		//Firebase Notification
+		$url = $apiRootPath.'PassPushNotification.php?type=ready_to_fixed&vendorId='.$service->vendorId.'&referenceNumber='.$service->referenceNumber.'&appliance='.$service->appliance;
+		$options = array(
+		'http' => array(
+		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+		'method'  => 'GET',
+		),
+		);
+		$context  = stream_context_create($options);
+		$result = json_decode(file_get_contents($url, false, $context));	
+		
+
+
+		//InsertNotificationHistory
+		$url = $apiRootPath.'InsertNotificationHistory.php';
+
+		$apiData = array("serviceId" => $service->serviceId, "status" => $service->status, "vendorId" => $service->vendorId,"logisticsId"=>0,"customerId"=>0,"type"=>"ready_to_fixed", "title" => $result->title,"message" => $result->notificationMessage,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage,"isActive"=>1);		
+		$options = array(
+			'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => json_encode($apiData), 
+			),
+		);			
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);		
+	
+	
+	} else if ($service->status=='cancelled') {
+		
+		if($service->cancelledBy=='c'){
+			
+			//Firebase Notification
+			$url = $apiRootPath.'PassPushNotification.php?type=cancel&vendorId='.$service->vendorId.'&referenceNumber='.$service->referenceNumber.'&appliance='.$service->appliance;
+			$options = array(
+			'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			'method'  => 'GET',
+			),
+			);
+			$context  = stream_context_create($options);
+			$result = json_decode(file_get_contents($url, false, $context));
+			
+			//InsertNotificationHistory
+			$url = $apiRootPath.'InsertNotificationHistory.php';
+
+			$apiData = array("serviceId" => $service->serviceId, "status" => $service->status, "vendorId" => $service->vendorId,"type"=>"cancel","logisticsId"=>0,"customerId"=>0, "title" => $result->title,"message" => $result->notificationMessage,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage,"isActive"=>1);		
+			$options = array(
+				'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => json_encode($apiData), 
+				),
+			);			
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);		
+			
+		}if($service->cancelledBy=='v'){
+			
+			//Firebase Notification
+			$url = $apiRootPath.'PassPushNotification.php?type=vendor_cannot_fix&customerId='.$service->customerId.'&referenceNumber='.$service->referenceNumber.'&appliance='.$service->appliance;
+			$options = array(
+			'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			'method'  => 'GET',
+			),
+			);
+			$context  = stream_context_create($options);
+			$result = json_decode(file_get_contents($url, false, $context));
+			
+			//InsertNotificationHistory
+			$url = $apiRootPath.'InsertNotificationHistory.php';
+
+			$apiData = array("serviceId" => $service->serviceId, "status" => $service->status, "vendorId" => 0,"type"=>"vendor_cannot_fix","logisticsId"=>0,"customerId"=>$service->customerId, "title" => $result->title,"message" => $result->notificationMessage,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage,"isActive"=>1);		
+			$options = array(
+				'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => json_encode($apiData), 
+				),
+			);			
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);	
+			
+		}if($service->cancelledBy=='a'){
+			
+			//Firebase Notification
+			$url = $apiRootPath.'PassPushNotification.php?type=admin_cancel&customerId='.$service->customerId.'&referenceNumber='.$service->referenceNumber.'&appliance='.$service->appliance;
+			$options = array(
+			'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			'method'  => 'GET',
+			),
+			);
+			$context  = stream_context_create($options);
+			$result = json_decode(file_get_contents($url, false, $context));
+			
+			//InsertNotificationHistory
+			$url = $apiRootPath.'InsertNotificationHistory.php';
+
+			$apiData = array("serviceId" => $service->serviceId, "status" => $service->status, "vendorId" => 0,"type"=>"admin_cancel","logisticsId"=>0,"customerId"=>$service->customerId, "title" => $result->title,"message" => $result->notificationMessage,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage,"isActive"=>1);		
+			$options = array(
+				'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => json_encode($apiData), 
+				),
+			);			
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);	
+		}	
+	
+	} else if ($service->status=='fixed') {
+		//Firebase Notification
+		$url = $apiRootPath.'PassPushNotification.php?type=fixed&customerId='.$service->customerId.'&referenceNumber='.$service->referenceNumber.'&appliance='.$service->appliance;
+		$options = array(
+		'http' => array(
+		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+		'method'  => 'GET',
+		),
+		);
+		$context  = stream_context_create($options);
+		$result = json_decode(file_get_contents($url, false, $context));	
+		
+
+		//InsertNotificationHistory
+		$url = $apiRootPath.'InsertNotificationHistory.php';
+
+		$apiData = array("serviceId" => $service->serviceId, "status" => $service->status, "customerId" => $service->customerId,"type"=>"fixed","vendorId"=>0,"logisticsId"=>0,"title" => $result->title,"message" => $result->notificationMessage,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage,"isActive"=>1);		
+		$options = array(
+			'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => json_encode($apiData), 
+			),
+		);			
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);		
+	
+	
+	} else if ($service->status=='delivered') {
+		//Firebase Notification
+		$url = $apiRootPath.'PassPushNotification.php?type=delivered&customerId='.$service->customerId.'&referenceNumber='.$service->referenceNumber.'&appliance='.$service->appliance;
+		$options = array(
+		'http' => array(
+		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+		'method'  => 'GET',
+		),
+		);
+		$context  = stream_context_create($options);
+		$result = json_decode(file_get_contents($url, false, $context));	
+	
+    	//InsertNotificationHistory
+		$url = $apiRootPath.'InsertNotificationHistory.php';
+	
+		$apiData = array("serviceId" => $service->serviceId, "status" => $service->status, "customerId" => $service->customerId,"vendorId"=>0,"title" => $result->title,"message" => $result->notificationMessage,"nativeTitle" => $result->nativeTitle,"nativeMessage" => $result->notificationNativeMessage,"logisticsId"=>0,"type"=>"delivered","isActive"=>1);		
+		$options = array(
+			'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			'method'  => 'POST',
+            'content' => json_encode($apiData), 
+			),
+		);			
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);		
+
+	}
+	if (isset($data->defectAudio)) {
+
+		$fileName = $service->serviceId.'_defectAudio';
+		$imgUpload = imageUploadToDisk($data->defectAudio,$defectAudioPath,$fileName);
+		if ($imgUpload) {			
+			$service->defectAudioPath = $defectAudioDBPath.$imgUpload;
+			$service->UpdateDefectAudioPath();
+		}
+	}
+		
+	if (isset($data->fixedVideo)) {
+
+		$fileName = $service->serviceId.'_fix';
+		$imgUpload = imageUploadToDisk($data->fixedVideo,$fixedVideoPath,$fileName);
+		if ($imgUpload) {			
+			$service->fixedVideoPath = $fixedVideoDBPath.$imgUpload;
+			$service->UpdateFixedVideoPath();
+		}
+	}
+	
+	
+	
+	
+  echo json_encode($service); //converting the output data into JSON
+}else{
+  echo json_encode($service); //converting the output data into JSON
+}
+
+?>

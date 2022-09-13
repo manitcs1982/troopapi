@@ -1,0 +1,68 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+include_once '../Config/database.php';
+include_once '../Objects/RateCard.php';
+
+$database = new Database(); //Declaring object for database class
+$db = $database->GetRateCardConnection();
+
+
+$rateCard = new RateCard($db);
+
+$rateCard->productId = $_GET['productId'];
+
+$result = $rateCard->GetAllRateCardByProductIdWithOutStatus();
+$database->CloseConnection();
+$rateCardArray = array();
+if($result){
+  $num = $result->rowCount();
+
+  // check if more than 0 record found
+  if($num>0){
+  
+      //Fetching the result data from result object
+      while ($row = $result->fetch(PDO::FETCH_ASSOC))
+      {
+      	  $rateCard = new RateCard($db);
+      	  
+          extract($row);          		
+          $rateCard->imageUrl = $RCM_imageUrl;
+          $rateCard->id = $RCM_GPK;  
+          $rateCard->productId = $RCM_PDM_GFK;  		  
+		  $rateCard->imageDescription = $RCM_imageDescription;
+		  $rateCard->userDescription = $RCM_userDescription;
+		  $rateCard->vendorPrice = $RCM_vendorPrice;
+		  $rateCard->customerPrice = $RCM_customerPrice;
+		  $rateCard->customerDisplayPrice = $RCM_customerDisplayPrice;
+		  $rateCard->customerPricePercentage = $RCM_customerPricePercentage;		  
+		  $rateCard->GSTPercentage = $RCM_GSTPercentage;
+		  $rateCard->GSTPrice = $RCM_GSTPrice;		  
+		  $rateCard->status = $RCM_status;
+		  $rateCard->quantity = $RCM_quantity;
+		  $rateCard->nativeImageDescription = $RCM_nativeImageDescription;
+		  $rateCard->nativeUserDescription = $RCM_nativeUserDescription;
+		  $rateCard->createdOn = $RCM_createdOn;
+		  $rateCard->modifiedOn = $RCM_modifiedOn;	
+		  array_push($rateCardArray,$rateCard);
+      }
+      echo json_encode($rateCardArray); //converting the output data into JSON
+  }else{
+  	  $rateCard->error = "No records found";
+  	  array_push($rateCardArray,$rateCard);
+      echo json_encode($rateCardArray); //converting the output data into JSON
+  }
+}else{
+  	  array_push($rateCardArray,$rateCard);
+      echo json_encode($rateCardArray); //converting the output data into JSON
+}
+
+?>
