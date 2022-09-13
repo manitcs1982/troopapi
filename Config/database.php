@@ -31,7 +31,7 @@ class Database{
 				'opts' => array(
 	PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',	
 	PDO::MYSQL_ATTR_SSL_CA => 'https://github.com/manitcs1982/troopapi/blob/2365afeb79e0adfb81432870ece4e178aaa51c56/Config/DigiCertGlobalRootCA.crt (4).pem',
-	PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
+	PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
 )
 							);
 	
