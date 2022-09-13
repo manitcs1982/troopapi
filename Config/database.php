@@ -29,8 +29,8 @@ class Database{
 								
 	private $db_info = array(				
 				'opts' => array(
-	PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-	PDO::MYSQL_ATTR_SSL_CA => true,
+	PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',	
+	PDO::MYSQL_ATTR_SSL_CA => 'DigiCertGlobalRootCA.crt (4).pem',
 	PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
 )
 							);
