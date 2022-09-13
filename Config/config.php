@@ -1,5 +1,5 @@
 <?php
- $apiRootPath = "https://oncefyxd.com/Troop/troopapi/Common/"; 
+ $apiRootPath = "https://oncefyxd.com/Common/"; 
  //$apiRootPath = "http://localhost:80/Troop/Common/";
  
  //date_default_timezone_set('Asia/Kolkata');
