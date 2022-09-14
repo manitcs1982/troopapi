@@ -53,6 +53,42 @@ if($result){
 		  $customerProduct->createdOn = $CSP_createdOn;
 		  $customerProduct->modifiedOn = $CSP_modifiedOn;
 		  
+		  $customerProduct->customerProductInfoId = $CPI_GPK;
+          $customerProduct->productId = $CPI_PDM_GFK;
+          $customerProduct->customerId = $CPI_CSR_GFK;
+          $customerProduct->productInfoId = $CPI_PIN_GFK;  
+                    
+		  $customerProduct->productInfoId = $PIN_GPK;
+		  $customerProduct->productId = $PIN_PDM_GFK;
+          $customerProduct->question = $PIN_question;
+		  $customerProduct->type = $PIN_type;
+          $customerProduct->answer = $PIN_answer;
+          $customerProduct->status = $PIN_status;
+          $customerProduct->minLength = $PIN_minLength;
+          $customerProduct->maxLength = $PIN_maxLength;
+          $customerProduct->isFloat = $PIN_isFloat;
+          $customerProduct->createdOn = $PIN_createdOn;		  
+          $customerProduct->modifiedOn = $PIN_modifiedOn;
+		  $customerProduct->IsMandatory = $PIN_IsMandatory;
+      	  $customerProduct->nativeQuestion = $PIN_nativeQuestion;
+      	  $customerProduct->nativeAnswer = $PIN_nativeAnswer;
+		  $customerProduct->placeHolder = $PIN_placeHolder;
+      	  $customerProduct->nativePlaceHolder = $PIN_nativePlaceHolder;
+      	  
+      	  $customerProduct->productId = $PDM_GPK;
+          $customerProduct->name = $PDM_name;
+		  $customerProduct->description = $PDM_description;
+          $customerProduct->imageUrl = $customerProductDBPath.$PDM_imageUrl;
+          $customerProduct->isTurnOnRequired = $PDM_isTurnOnRequired;
+          $customerProduct->status = $PDM_status;
+          $customerProduct->gstValue = $PDM_GSTValue;
+          $customerProduct->note = $PDM_note;
+          $customerProduct->createdOn = $PDM_createdOn;		  
+          $customerProduct->modifiedOn = $PDM_modifiedOn;
+          $customerProduct->nativeName = $PDM_nativeName;
+          $customerProduct->nativeDescription = $PDM_nativeDescription;
+          $customerProduct->nativeNote = $PDM_nativeNote;
+		  
 		  array_push($customerProductArray,$customerProduct);
       }      	
   
