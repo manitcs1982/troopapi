@@ -1,6 +1,6 @@
 <?php
- //$apiRootPath = "https://oncefyxd.com/Troop/troopapi/Common/"; 
- $apiRootPath = "http://localhost:80/TroopTest/Common/";
+ $apiRootPath = "https://oncefyxd.com/Troop/troopapi/Common/"; 
+ //$apiRootPath = "http://localhost:80/TroopTest/Common/";
  
  $invoicePdfPath = "https://oncefyxd.com/Troop/troopapi/Invoice/PDF/";
  
