@@ -1,6 +1,8 @@
 <?php
- $apiRootPath = "https://oncefyxd.com/Common/"; 
- //$apiRootPath = "http://localhost:80/Troop/Common/";
+ //$apiRootPath = "https://oncefyxd.com/Troop/troopapi/Common/"; 
+ $apiRootPath = "http://localhost:80/TroopTest/Common/";
+ 
+ $invoicePdfPath = "https://oncefyxd.com/Troop/troopapi/Invoice/PDF/";
  
  //date_default_timezone_set('Asia/Kolkata');
  date_default_timezone_set("Asia/Calcutta");   //India time (GMT+5:30)
