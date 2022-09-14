@@ -23,6 +23,32 @@ class CustomerProduct{
 		
 		public $error;
 		
+		
+		public $customerProductInfoId;		
+		public $productInfoId;
+		public $answer;
+				
+		
+		public  $description;
+				
+		public  $isTurnOnRequired;
+		public  $note;
+		public  $nativeName;
+		public  $nativeDescription;
+		public  $nativeNote;
+		
+		
+		
+		public  $question;
+		public  $type;				
+		public  $minLength;
+		public  $maxLength;
+		public  $isFloat;		
+		public  $IsMandatory;
+		public  $nativeQuestion;
+		public  $nativeAnswer;
+		public  $placeHolder;
+		public  $nativePlaceHolder;		
 
 		// Assigning the DB connection
 		public function __construct($db){
