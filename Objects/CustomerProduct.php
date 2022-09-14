@@ -91,6 +91,23 @@ class CustomerProduct{
 				return false;
 			}
 		}
+			//Getting customer product by customer product id
+		public function GetCustomerProductByCustomerProductIdTest(){					
+			try{
+				$sql = "select * from customer_product CP
+inner join customer_product_info CPI on CP.CSP_GPK=CPI.CPI_CSP_GFK
+inner join product_master PM on PM.PDM_GPK=CPI.CPI_PDM_GFK
+where CSP_CSR_GFK=:customerId"; //
+				$result = $this->conn->prepare($sql);
+				$this->customerId=htmlspecialchars(strip_tags($this->customerId));				
+				$result->bindParam(":customerId", $this->customerId);
+				$result->execute();
+				return $result;
+			}catch(PDOException $e){
+				$this->error = "Error: ".$e->getMessage();
+				return false;
+			}
+		}
 		
 		//Getting customer product by customer id
 		public function GetAllCustomerProductByCustomerId(){			
