@@ -8,29 +8,29 @@ class Database{
 	private $username = "adminlab";
 	private $password = "Gesa@12345";
 		
-	private $databaseCustomer = "Customer";
-	private $databaseRateCard = "Ratecard_master";
-	private $databaseAddress = "Address";
-	private $databaseService = "Service";
-	private $databaseVendor = "Vendor";
-	private $databaseSchedule = "Schedule_Master";
-	private $databaseCustomerProduct = "Customer_Product";
-	private $databaseProduct = "Product_Master";
-	private $databaseLogistics = "Logistics";
-	private $databaseZone = "Zone_Master";
+	private $databaseCustomer = "testtroop";
+	private $databaseRateCard = "testtroop";
+	private $databaseAddress = "testtroop";
+	private $databaseService = "testtroop";
+	private $databaseVendor = "testtroop";
+	private $databaseSchedule = "testtroop";
+	private $databaseCustomerProduct = "testtroop";
+	private $databaseProduct = "testtroop";
+	private $databaseLogistics = "testtroop";
+	private $databaseZone = "testtroop";
 	// private $databaseZone = "Zone_Master";
-	private $databaseNotificationMaster = "Notification_Master";
-	private $databasePincodeMaster = "Pincode_Master";
-	private $databaseRoleMaster = "Role_Master";
-	private $databaseChat = "Chat";
-	private $databaseConstantValues = "Constant_Values";
+	private $databaseNotificationMaster = "testtroop";
+	private $databasePincodeMaster = "testtroop";
+	private $databaseRoleMaster = "testtroop";
+	private $databaseChat = "testtroop";
+	private $databaseConstantValues = "testtroop";
 	public  $conn;
 	
 								
 	private $db_info = array(				
 				'opts' => array(
-	PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',	
-	PDO::MYSQL_ATTR_SSL_CA => 'https://github.com/manitcs1982/troopapi/blob/2365afeb79e0adfb81432870ece4e178aaa51c56/Config/DigiCertGlobalRootCA.crt (4).pem',
+	PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+	PDO::MYSQL_ATTR_SSL_CA => true,
 	PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
 )
 							);
