@@ -15,7 +15,7 @@ include_once '../Objects/CustomerProduct.php';
 
 $database = new Database(); //Declaring object for database class
 $db = $database->GetCustomerProductConnection();
-
+echo "test";
 
 $customerProduct = new CustomerProduct($db);
 
