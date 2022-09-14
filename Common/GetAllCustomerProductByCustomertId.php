@@ -21,7 +21,7 @@ $customerProduct = new CustomerProduct($db);
 
 $customerProduct->customerId = $_GET['customerId'];
 
-$result = $customerProduct->GetAllCustomerProductByCustomerId();
+$result = $customerProduct->GetCustomerProductByCustomerProductIdTest();
 $database->CloseConnection();
 $customerProductArray = array();
 
@@ -55,37 +55,9 @@ if($result){
 		  
 		  array_push($customerProductArray,$customerProduct);
       }      	
-      $customerProductResultArray = array();
-      foreach($customerProductArray as $array){   
-	      
-	      		$url = $apiRootPath.'GetAllCustomerProductInfoByCustomerProductId.php?customerProductId='.$array->customerProductId;		
-				$options = array(
-				    'http' => array(
-				        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-				        'method'  => 'GET',		        
-				    ),
-				);			
-				$context  = stream_context_create($options);
-				$result = file_get_contents($url, false, $context);	
-					
-				$array->productDetails = json_decode($result);
-				//array_push($customerProductResultArray,$array);				
+  
 				
-				$url = $apiRootPath.'GetProductByProductId.php?productId='.$array->productId;		
-				$options = array(
-				    'http' => array(
-				        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-				        'method'  => 'GET',		        
-				    ),
-				);			
-				$context  = stream_context_create($options);
-				$result = file_get_contents($url, false, $context);	
-					
-				$array->productMasterDetails = json_decode($result);
-				array_push($customerProductResultArray,$array);	
-		  } 
-				
-      echo json_encode($customerProductResultArray); //converting the output data into JSON
+      echo json_encode($customerProductArray); //converting the output data into JSON
   }else{
   	  $customerProduct->error = "No records found";
 	  array_push($customerProductArray,$customerProduct);
