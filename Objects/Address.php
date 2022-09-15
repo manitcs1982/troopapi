@@ -21,6 +21,7 @@ class Address{
 		public $modifiedOn;
         public $latitude;
         public $longitude;		
+        public $serviceCount;		
 		public $error;
 		
 		public $test;
@@ -50,7 +51,7 @@ class Address{
 		//Getting Address by vendorId
 		public function GetAddressByVendorId(){			
 			try{
-				$sql = "select * from Address where ADR_VDR_GFK=:vendorId and ADR_status=1"; //
+				$sql = "select * from Address where ADR_VDR_GFK=:vendorId and ADR_status=1 order by ADR_srCount"; //
 				$result = $this->conn->prepare($sql);
 				$this->vendorId=htmlspecialchars(strip_tags($this->vendorId));				
 				$result->bindParam(":vendorId", $this->vendorId);
@@ -65,7 +66,7 @@ class Address{
 		//Getting Address by customerId
 		public function GetAddressByCustomerId(){			
 			try{
-				$sql = "select * from Address where ADR_CSR_GFK=:customerId and ADR_status=1"; //
+				$sql = "select * from Address where ADR_CSR_GFK=:customerId and ADR_status=1  order by ADR_srCount"; //
 				$result = $this->conn->prepare($sql);
 				$this->customerId=htmlspecialchars(strip_tags($this->customerId));				
 				$result->bindParam(":customerId", $this->customerId);
@@ -81,7 +82,7 @@ class Address{
 		public function GetAddressByPotentialVendorId()
 		{
 			try {
-				$sql = "select * from Address where ADR_PVD_GFK=:potentialVendorId and ADR_status=1"; //
+				$sql = "select * from Address where ADR_PVD_GFK=:potentialVendorId and ADR_status=1  order by ADR_srCount"; //
 				$result = $this->conn->prepare($sql);
 				$this->potentialVendorId=htmlspecialchars(strip_tags($this->potentialVendorId));
 				$result->bindParam(":potentialVendorId", $this->potentialVendorId);
@@ -96,7 +97,7 @@ class Address{
 		//Getting Address by customerId and Label
 		public function GetAddressByCustomerIdAndAddressLabel(){			
 			try{
-				$sql = "select * from Address where ADR_CSR_GFK=:customerId and ADR_addressLabel=:addressLabel and ADR_status=1"; //
+				$sql = "select * from Address where ADR_CSR_GFK=:customerId and ADR_addressLabel=:addressLabel and ADR_status=1  order by ADR_srCount"; //
 				$result = $this->conn->prepare($sql);
 				$this->customerId=htmlspecialchars(strip_tags($this->customerId));				
 				$result->bindParam(":customerId", $this->customerId);
@@ -172,6 +173,24 @@ class Address{
 				$this->id=htmlspecialchars(strip_tags($this->id));
 				$result->bindParam(":id", $this->id);
 
+				$result->execute();
+				return true;
+			} catch (PDOException $e) {
+				$this->error = "Error: ".$e->getMessage();
+				return false;
+			}
+		}
+		
+		public function UpdateAddressServiceCount()
+		{
+			try {
+				$sql = "select @prevCount:=ADR_srCount from Address.Address where ADR_GPK=:id;
+update Address.Address set ADR_srCount=@prevCount+1  where ADR_GPK=:id";
+
+				$result = $this->conn->prepare($sql);
+				$this->id=htmlspecialchars(strip_tags($this->id));
+				$result->bindParam(":id", $this->id);				
+				
 				$result->execute();
 				return true;
 			} catch (PDOException $e) {

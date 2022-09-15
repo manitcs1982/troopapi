@@ -48,6 +48,7 @@ class Service{
 		public $GSTAmount;
 		public $fixedVideoPath;
 		public $defectAudioPath;		
+		public $serviceCount;		
 
 		public $error;
 		

@@ -43,7 +43,7 @@ class CustomerProduct{
 				$result->bindParam(":customerId", $this->customerId);
 				$this->productId=htmlspecialchars(strip_tags($this->productId));
 				$result->bindParam(":productId", $this->productId);
-				$this->name=htmlspecialchars(strip_tags($this->name));
+				/*$this->name=htmlspecialchars(strip_tags($this->name));
 				$result->bindParam(":name", $this->name);
 				$this->capacity=htmlspecialchars(strip_tags($this->capacity));
 				$result->bindParam(":capacity", $this->capacity);				
@@ -60,7 +60,8 @@ class CustomerProduct{
 				$this->brand=htmlspecialchars(strip_tags($this->brand));
 				$result->bindParam(":brand", $this->brand);	
 				$this->manDate=htmlspecialchars(strip_tags($this->manDate));
-				$result->bindParam(":manDate", $this->manDate);				
+				$result->bindParam(":manDate", $this->manDate);	
+				*/			
 				$this->status=htmlspecialchars(strip_tags($this->status));
 				$result->bindParam(":status", $this->status);
 				$this->createdOn=htmlspecialchars(strip_tags($this->createdOn));
