@@ -38,13 +38,12 @@ if($result){
       	  
           extract($row);    
           
-
-         $service->serviceId = $SVC_GPK;
+          $service->serviceId = $SVC_GPK;
           $service->customerId = $SVC_CST_GFK;
 		  $service->logisticsId = $SVC_LGT_GFK;
 		  $service->referenceId = $SVC_referenceId;
           $service->vendorId = $SVC_VDR_GFK;       		
-         $service->customerAddressId = $SVC_ADR_GFK;           
+          $service->customerAddressId = $SVC_ADR_GFK;           
 		  $service->customerProductId = $SVC_CSP_GFK;
 		  $service->productId = $SVC_PDM_GFK;
 		  $service->serviceCharge = $SVC_serviceCharge;
@@ -72,7 +71,7 @@ if($result){
 		  $service->reopenReferenceId = $SVC_reopenReferenceId; 
 		  $service->reopenReason = $SVC_reopenReason;
 		  $service->isCancelled = $SVC_isCancelled;		  
-		    $service->fixedVideoPath = $fixedVideoDBPath.$SVC_fixedVideoPath;
+		  $service->fixedVideoPath = $fixedVideoDBPath.$SVC_fixedVideoPath;
 		  $service->defectAudioPath = $defectAudioDBPath.$SVC_defectAudioPath;
 		  
 		  array_push($serviceArray,$service);
