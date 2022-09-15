@@ -36,7 +36,7 @@ $options = array(
 		
 $context  = stream_context_create($options);
 $result2 = file_get_contents($url, false, $context);	
-
+print_r($result2);
 $customerProductId = json_decode($result2)->customerProductId;
 
 foreach ($dataSet as $data) {
