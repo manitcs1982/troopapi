@@ -14,7 +14,7 @@ include_once '../Config/database.php'; include_once '../Config/config.php';
 include_once '../Objects/CustomerProductInfo.php';
 include_once '../Common/ImageUploadToDisk.php';
 $database = new Database(); //Declaring object for database class
-echo "kirutu";
+
 $dataSet = json_decode(file_get_contents("php://input")); //Recieving input data
 
 $outputArray = array();
@@ -36,7 +36,7 @@ $options = array(
 		
 $context  = stream_context_create($options);
 $result2 = file_get_contents($url, false, $context);	
-print_r($result2);
+
 $customerProductId = json_decode($result2)->customerProductId;
 
 foreach ($dataSet as $data) {
