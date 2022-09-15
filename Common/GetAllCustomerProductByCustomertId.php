@@ -43,7 +43,7 @@ if($result){
           $customerProduct->productId = $CSP_PDM_GFK;   
           $customerProduct->name = $CSP_name;
 		  $customerProduct->capacity = $CSP_capacity;
-		  $customerProduct->imageUrl = $customerProductDBPath.$CSP_imageUrl;
+		  $customerProduct->imageUrl = $CSP_imageUrl;
    		  $customerProduct->notes = $CSP_notes;    		
 		  $customerProduct->phoneNumber = $CSP_phoneNumber;
 		  $customerProduct->model = $CSP_model;
@@ -55,8 +55,37 @@ if($result){
 		  
 		  array_push($customerProductArray,$customerProduct);
       }      	
-
-      echo json_encode($customerProductArray); //converting the output data into JSON
+      $customerProductResultArray = array();
+      foreach($customerProductArray as $array){   
+	      
+	      		$url = $apiRootPath.'GetAllCustomerProductInfoByCustomerProductId.php?customerProductId='.$array->customerProductId;		
+				$options = array(
+				    'http' => array(
+				        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				        'method'  => 'GET',		        
+				    ),
+				);			
+				$context  = stream_context_create($options);
+				$result = file_get_contents($url, false, $context);	
+					
+				$array->productDetails = json_decode($result);
+				//array_push($customerProductResultArray,$array);				
+				
+				$url = $apiRootPath.'GetProductByProductId.php?productId='.$array->productId;		
+				$options = array(
+				    'http' => array(
+				        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				        'method'  => 'GET',		        
+				    ),
+				);			
+				$context  = stream_context_create($options);
+				$result = file_get_contents($url, false, $context);	
+					
+				$array->productMasterDetails = json_decode($result);
+				array_push($customerProductResultArray,$array);	
+		  } 
+				
+      echo json_encode($customerProductResultArray); //converting the output data into JSON
   }else{
   	  $customerProduct->error = "No records found";
 	  array_push($customerProductArray,$customerProduct);

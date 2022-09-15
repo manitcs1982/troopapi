@@ -44,7 +44,7 @@ if($result){
 		  $customerProduct->phoneNumber = $CSP_phoneNumber;
 		  $customerProduct->name = $CSP_name;
 		  $customerProduct->capacity = $CSP_capacity;
-		  $customerProduct->imageUrl = $customerProductDBPath.$CSP_imageUrl;
+		  $customerProduct->imageUrl = $CSP_imageUrl;
 		  $customerProduct->model = $CSP_model;
 		  $customerProduct->brand = $CSP_brand;
 		  $customerProduct->manDate = $CSP_manDate;

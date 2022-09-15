@@ -51,11 +51,7 @@ if($num>0){
 	          $customerProductInfo->productId = $CPI_PDM_GFK;
 	          $customerProductInfo->customerId = $CPI_CSR_GFK;
 	          $customerProductInfo->productInfoId = $CPI_PIN_GFK;       				  		  
-			if($CPI_isImage==1){
-				$customerProductInfo->answer = $customerProductDBPath.$CPI_answer;
-			}else{
-				$customerProductInfo->answer = $CPI_answer;
-			}	 
+			  $customerProductInfo->answer = $CPI_answer;		 
 			  $customerProductInfo->createdOn = $CPI_createdOn;
 			  $customerProductInfo->modifiedOn = $CPI_modifiedOn;
 			  
