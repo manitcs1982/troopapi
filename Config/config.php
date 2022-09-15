@@ -1,8 +1,7 @@
 <?php
- $apiRootPath = "https://oncefyxd.com/Common/"; 
- //$apiRootPath = "http://localhost:80/TroopTest/Common/";
- 
- $invoicePdfPath = "https://oncefyxd.com/Troop/troopapi/Invoice/PDF/";
+ //$apiRootPath = "https://www.oncefyxd.com/Troop/Common/";
+ $apiRootPath = "http://13.233.85.98/Troop/Common/";
+ //$apiRootPath = "http://localhost:80/Troop/Common/";
  
  //date_default_timezone_set('Asia/Kolkata');
  date_default_timezone_set("Asia/Calcutta");   //India time (GMT+5:30)
@@ -28,20 +27,16 @@
  $vendorApiKey = "AAAAz5vDt3k:APA91bGz7A82h7yOzoNRGbv2augVEbnHVEJE25NzGl4mrZTi1udCBi6hApwoYlxxIfsHqD5suodg8BOCtfhyA4lp_99nwzwQaUDbzzrglyXpSPiz2DEkJKpaGPtwNT0qI1MWPqv9Ysbj";
  
  
- $customerProductPath = 'customerproduct';
- $chatMediaPath = 'chatmedia';
- $fixedVideoPath = 'fixedvideo';
- $defectAudioPath = 'defectaudio';
- $defectAudioPath = 'defectaudio';
+ $customerProductPath = '../Images/CustomerProduct/';
+ $chatMediaPath = '../Images/ChatMedia/';
+ $fixedVideoPath = '../Images/fixedVideo/';
+ $defectAudioPath = '../Images/DefectAudio/';
  
- $customerProductDBPath = 'https://oncefyxdblob.blob.core.windows.net/customerproduct/';
- $chatMediaDBPath = 'https://oncefyxdblob.blob.core.windows.net/chatmedia/';
- $fixedVideoDBPath = 'https://oncefyxdblob.blob.core.windows.net/fixedvideo/';
- $defectAudioDBPath = 'https://oncefyxdblob.blob.core.windows.net/defectaudio/';
- $ConstantValuesDBPath = 'https://oncefyxdblob.blob.core.windows.net/banner/';
- $ProductDBPath = 'https://oncefyxdblob.blob.core.windows.net/product/';
+ $customerProductDBPath = 'https://www.oncefyxd.com/Troop/Images/CustomerProduct/';
+ $chatMediaDBPath = 'https://www.oncefyxd.com/Troop/Images/ChatMedia/';
+ $fixedVideoDBPath = 'https://www.oncefyxd.com/Troop/Images/fixedVideo/';
+ $defectAudioDBPath = 'https://www.oncefyxd.com/Troop/Images/DefectAudio/';
  
- $blobConnectionString = "DefaultEndpointsProtocol=https;AccountName=oncefyxdblob;AccountKey=TLS9bfXrKQn5JvPcbcmtKP1NqKqb5jNireOg8Gzf2FCQfJEVYumVXJaBAFd5Ue1eW+VjrimSJCpw+AStuDfOcQ==";
- $blobName = "oncefyxdblob";
+
 
 ?>
