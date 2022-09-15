@@ -48,7 +48,7 @@ if($result){
 		  $address->modifiedOn = $ADR_modifiedOn;
 		  $address->latitude = $ADR_lat;
 		  $address->longitude = $ADR_long;
-		  $address->srCount = $ADR_srCount;
+		  
       }
       echo json_encode($address); //converting the output data into JSON
   }else{

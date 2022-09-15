@@ -43,7 +43,7 @@ if($result){
           $customerProduct->productId = $CSP_PDM_GFK;   
           $customerProduct->name = $CSP_name;
 		  $customerProduct->capacity = $CSP_capacity;
-		  $customerProduct->imageUrl = $CSP_imageUrl;
+		  $customerProduct->imageUrl = $customerProductDBPath.$CSP_imageUrl;
    		  $customerProduct->notes = $CSP_notes;    		
 		  $customerProduct->phoneNumber = $CSP_phoneNumber;
 		  $customerProduct->model = $CSP_model;

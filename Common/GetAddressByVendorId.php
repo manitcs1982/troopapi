@@ -49,8 +49,7 @@ if($result){
 		  $address->createdOn = $ADR_createdOn;
 		  $address->modifiedOn = $ADR_modifiedOn;
           $address->latitude = $ADR_lat;
-		  $address->longitude = $ADR_long;
-          $address->srCount = $ADR_srCount;		  
+		  $address->longitude = $ADR_long;		  
 		  
 		  array_push($addressArray, $address);		  
       }
