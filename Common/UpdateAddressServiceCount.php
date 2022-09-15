@@ -13,26 +13,19 @@ include_once '../Config/database.php';
 include_once '../Objects/Address.php';
 
 $database = new Database(); //Declaring object for database class
-$db = $database->GetAddressConnection();
 
+$data = json_decode(file_get_contents("php://input")); //Recieving input data
+
+$db = $database->GetAddressConnection();
 $address = new Address($db);
 
-$address->addressId = $_GET['addressId'];
+$address->id = $data->addressId;
+$result = $address->UpdateAddressServiceCount();
 
-$result = $address->IsAddressEligible();
-$database->CloseConnection();
-$addressArray = array();
 if($result){
-  $num = $result->rowCount();
-
-  // check if more than 0 record found
-  if($num>0){
-  		echo '1';
-  }else{
-  	  echo '0';
-  }
+  echo true; //converting the output data into JSON
 }else{
-	echo '0';
+  echo false; //converting the output data into JSON
 }
 
 ?>

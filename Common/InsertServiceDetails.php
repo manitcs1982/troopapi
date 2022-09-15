@@ -33,6 +33,7 @@ $service->vendorTotal = $data->vendorTotal;
 $service->pickUpDate = $data->pickUpDate;
 $service->pickUpSlot = $data->pickUpSlot;
 $service->notes = $data->notes;
+//$service->serviceCount = $data->serviceCount;
 $service->appliance = urlencode($data->appliance);
 
 
@@ -133,6 +134,18 @@ $service->referenceId="OF".$acronym.$day.$month.$service->serviceId;
 $service->UpdatereferenceIdByServiceId();
 
 if($result){
+	
+			$url = $apiRootPath.'UpdateAddressServiceCount.php';	
+			$addressData = array("addressId" => $service->addressId);
+			$options = array(
+			    'http' => array(
+			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			        'method'  => 'POST',
+			        'content' => json_encode($addressData), 
+			    ),
+			);			
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);
 	
 	    if($service->tempServiceId!=0){
 	    	$url = $apiRootPath.'DeleteTempService.php';
