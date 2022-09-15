@@ -32,7 +32,7 @@ class Database{
 	PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
 	PDO::MYSQL_ATTR_SSL_CA => true,
 	PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-					PDO::ssl-mode=>'require',
+					
 )
 							);
 	
