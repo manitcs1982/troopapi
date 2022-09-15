@@ -28,7 +28,7 @@ class CustomerProductInfo{
 		public function InsertCustomerProductInfo(){
 			try{
 				
-				$sql = "Insert into Customer_Product_Info Set CPI_PDM_GFK=:productId,CPI_CSP_GFK=:customerProductId,CPI_CSR_GFK=:customerId,CPI_PIN_GFK=:productInfoId,CPI_answer=:answer,CPI_isImage=:isImage, CPI_createdOn=:createdOn";
+				$sql = "Insert into Customer_Product_Info Set CPI_PDM_GFK=:productId,CPI_CSP_GFK=:customerProductId,CPI_CSR_GFK=:customerId,CPI_PIN_GFK=:productInfoId,CPI_answer=:answer, CPI_createdOn=:createdOn";
 			    $result = $this->conn->prepare($sql);
 			    
 				$this->productId=htmlspecialchars(strip_tags($this->productId));
@@ -42,9 +42,7 @@ class CustomerProductInfo{
 				$this->answer=htmlspecialchars(strip_tags($this->answer));
 				$result->bindParam(":answer", $this->answer);								
 				$this->createdOn=htmlspecialchars(strip_tags($this->createdOn));
-				$result->bindParam(":createdOn", $this->createdOn);				
-				$this->isImage=htmlspecialchars(strip_tags($this->isImage));
-				$result->bindParam(":isImage", $this->isImage);
+				$result->bindParam(":createdOn", $this->createdOn);
 				
 				$result->execute();
 				$this->customerProductInfoId = $this->conn->lastInsertId();											  			

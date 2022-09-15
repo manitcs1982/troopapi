@@ -23,32 +23,6 @@ class CustomerProduct{
 		
 		public $error;
 		
-		
-		public $customerProductInfoId;		
-		public $productInfoId;
-		public $answer;
-				
-		
-		public  $description;
-				
-		public  $isTurnOnRequired;
-		public  $note;
-		public  $nativeName;
-		public  $nativeDescription;
-		public  $nativeNote;
-		
-		
-		
-		public  $question;
-		public  $type;				
-		public  $minLength;
-		public  $maxLength;
-		public  $isFloat;		
-		public  $IsMandatory;
-		public  $nativeQuestion;
-		public  $nativeAnswer;
-		public  $placeHolder;
-		public  $nativePlaceHolder;		
 
 		// Assigning the DB connection
 		public function __construct($db){
@@ -69,7 +43,7 @@ class CustomerProduct{
 				$result->bindParam(":customerId", $this->customerId);
 				$this->productId=htmlspecialchars(strip_tags($this->productId));
 				$result->bindParam(":productId", $this->productId);
-				/*$this->name=htmlspecialchars(strip_tags($this->name));
+				$this->name=htmlspecialchars(strip_tags($this->name));
 				$result->bindParam(":name", $this->name);
 				$this->capacity=htmlspecialchars(strip_tags($this->capacity));
 				$result->bindParam(":capacity", $this->capacity);				
@@ -86,8 +60,7 @@ class CustomerProduct{
 				$this->brand=htmlspecialchars(strip_tags($this->brand));
 				$result->bindParam(":brand", $this->brand);	
 				$this->manDate=htmlspecialchars(strip_tags($this->manDate));
-				$result->bindParam(":manDate", $this->manDate);	
-				*/			
+				$result->bindParam(":manDate", $this->manDate);				
 				$this->status=htmlspecialchars(strip_tags($this->status));
 				$result->bindParam(":status", $this->status);
 				$this->createdOn=htmlspecialchars(strip_tags($this->createdOn));
@@ -110,24 +83,6 @@ class CustomerProduct{
 				$result = $this->conn->prepare($sql);
 				$this->customerProductId=htmlspecialchars(strip_tags($this->customerProductId));				
 				$result->bindParam(":customerProductId", $this->customerProductId);
-				$result->execute();
-				return $result;
-			}catch(PDOException $e){
-				$this->error = "Error: ".$e->getMessage();
-				return false;
-			}
-		}
-			//Getting customer product by customer product id
-		public function GetCustomerProductByCustomerProductIdTest(){					
-			try{
-				$sql = "select * from customer_product CP
-inner join customer_product_info CPI on CP.CSP_GPK=CPI.CPI_CSP_GFK
-inner join product_master PM on PM.PDM_GPK=CPI.CPI_PDM_GFK
-inner join product_info PI on PI.PIN_GPK=CPI.CPI_PIN_GFK
-where CSP_CSR_GFK=:customerId"; //
-				$result = $this->conn->prepare($sql);
-				$this->customerId=htmlspecialchars(strip_tags($this->customerId));				
-				$result->bindParam(":customerId", $this->customerId);
 				$result->execute();
 				return $result;
 			}catch(PDOException $e){

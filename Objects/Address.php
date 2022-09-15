@@ -20,8 +20,7 @@ class Address{
 		public $createdOn;
 		public $modifiedOn;
         public $latitude;
-        public $longitude;	
-        public $srCount;		
+        public $longitude;		
 		public $error;
 		
 		public $test;
