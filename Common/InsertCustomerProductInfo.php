@@ -14,7 +14,7 @@ include_once '../Config/database.php'; include_once '../Config/config.php';
 include_once '../Objects/CustomerProductInfo.php';
 include_once '../Common/ImageUploadToDisk.php';
 $database = new Database(); //Declaring object for database class
-
+echo "kirutu";
 $dataSet = json_decode(file_get_contents("php://input")); //Recieving input data
 
 $outputArray = array();
