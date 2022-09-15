@@ -30,7 +30,8 @@ class Database{
 	private $db_info = array(				
 				'opts' => array(
 	PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-	
+	PDO::MYSQL_ATTR_SSL_CA => true,
+	PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
 )
 							);
 	
@@ -38,7 +39,7 @@ class Database{
 	public function GetCustomerConnection(){	
 	
 		try{
-			$this->conn = new PDO("mysql:host=" . $this->servername . ";dbname=" . $this->databaseCustomer, $this->username, $this->password);
+			$this->conn = new PDO("mysql:host=" . $this->servername . ";dbname=" . $this->databaseCustomer, $this->username, $this->password,$this->db_info['opts']);
 			$this->conn->exec("set names utf8");			
 		}catch(PDOException $exception){
 			echo "Connection error: " . $exception->getMessage();
