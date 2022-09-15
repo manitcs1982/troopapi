@@ -3,10 +3,10 @@
 class Database{
 	
 	// Production server DB	
-	private $servername= "servicedb.cnd9douosfgw.ap-south-1.rds.amazonaws.com";
+	private $servername= "labroot.mysql.database.azure.com";
 	//private $servername= "13.233.85.98";
-	private $username = "admin";
-	private $password = "admin1234";
+	private $username = "adminlab";
+	private $password = "Gesa@12345";
 		
 	private $databaseCustomer = "Customer";
 	private $databaseRateCard = "Ratecard_master";
@@ -23,12 +23,23 @@ class Database{
 	private $databasePincodeMaster = "Pincode_Master";
 	private $databaseRoleMaster = "Role_Master";
 	private $databaseChat = "Chat";
+	private $databaseConstantValues = "Constant_Values";
 	public  $conn;
 	
+								
+	private $db_info = array(				
+				'opts' => array(
+	PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+	PDO::MYSQL_ATTR_SSL_CA => true,
+	PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+)
+							);
+	
 	// DB connection for Customer database
-	public function GetCustomerConnection(){		
+	public function GetCustomerConnection(){	
+	
 		try{
-			$this->conn = new PDO("mysql:host=" . $this->servername . ";dbname=" . $this->databaseCustomer, $this->username, $this->password);
+			$this->conn = new PDO("mysql:host=" . $this->servername . ";dbname=" . $this->databaseCustomer, $this->username, $this->password,$this->db_info['opts']);
 			$this->conn->exec("set names utf8");			
 		}catch(PDOException $exception){
 			echo "Connection error: " . $exception->getMessage();
@@ -252,7 +263,21 @@ class Database{
 	{
 		$this->conn = null;
 	}
-
+	public function GetConstantValuesConnection(){		
+		try{
+			$this->conn = new PDO("mysql:host=" . $this->servername . ";dbname=" . $this->databaseConstantValues, $this->username, $this->password);
+			$this->conn->exec("set names utf8");			
+		}catch(PDOException $exception){
+			echo "Connection error: " . $exception->getMessage();
+			die;
+		}
+		
+		catch(Exception $exception){
+			echo "Connection error: " . $exception->getMessage();
+			die;
+		}
+		return $this->conn;
+	}
 
 
 
