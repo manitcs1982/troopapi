@@ -1,6 +1,6 @@
 <?php
- //$apiRootPath = "https://www.oncefyxd.com/Troop/Common/";
- $apiRootPath = "http://13.233.85.98/Troop/Common/";
+ $apiRootPath = "https://www.oncefyxd.com/Common/";
+ //$apiRootPath = "http://13.233.85.98/Troop/Common/";
  //$apiRootPath = "http://localhost:80/Troop/Common/";
  
  //date_default_timezone_set('Asia/Kolkata');
