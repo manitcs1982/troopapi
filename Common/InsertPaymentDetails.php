@@ -34,10 +34,17 @@ $payment->customerId = $data->customerId;
 $payment->vendorId = $data->vendorId;
 $payment->logisticsId = $data->logisticsId;
 $payment->referenceNumber = $data->referenceNumber;
-$payment->customerTotal = $data->customerTotal;
+if($data->customerTotal == ''){
+	$payment->customerTotal = 0;
+}else{
+	$payment->customerTotal = $data->customerTotal;
+}
 $payment->paymentStatus  = $data->paymentStatus;
-$payment->isActive  = $data->isActive;
-
+if($data->isActive == ''){
+	$payment->isActive  = 0;
+}else{
+	$payment->isActive  = $data->isActive;
+}
 $payment->paymentIdValue = $razorResponse->id;
 $payment->paidAmount  = $razorResponse->amount / 100;
 $payment->description  = $razorResponse->description;
