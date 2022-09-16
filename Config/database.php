@@ -12,6 +12,7 @@ class Database{
 	private $password = "Gesa@2022";
 	
 	
+	
 		
 	private $databaseCustomer = "Customer";
 	private $databaseRateCard = "Ratecard_master";
