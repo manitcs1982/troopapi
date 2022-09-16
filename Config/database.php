@@ -7,7 +7,7 @@ class Database{
 	//private $username = "adminlab";
 	//private $password = "Gesa@12345";
 	
-	private $servername= "52.140.48.67";
+	private $servername= "52.140.48.67:3306";
 	private $username = "oncefyxdvm";
 	private $password = "Gesa@2022";
 	
