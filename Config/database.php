@@ -8,8 +8,8 @@ class Database{
 	//private $password = "Gesa@12345";
 	
 	private $servername= "52.140.48.67";
-	private $username = "root";
-	private $password = "Vzanl@2022";
+	private $username = "oncefyxd";
+	private $password = "Gesa@2022";
 	
 	
 		
