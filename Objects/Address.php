@@ -66,7 +66,7 @@ class Address{
 		//Getting Address by customerId
 		public function GetAddressByCustomerId(){			
 			try{
-				$sql = "select * from Address where ADR_CSR_GFK=:customerId and ADR_status=1  order by ADR_srCount"; //
+				$sql = "select * from Address where ADR_CSR_GFK=:customerId and ADR_status=1  order by ADR_srCount desc"; //
 				$result = $this->conn->prepare($sql);
 				$this->customerId=htmlspecialchars(strip_tags($this->customerId));				
 				$result->bindParam(":customerId", $this->customerId);
