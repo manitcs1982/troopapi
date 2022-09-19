@@ -33,7 +33,8 @@ if($result){
       {
       	  $address = new Address($db);
           extract($row);          		          
-          $address->id = $ADR_GPK;          		
+          $address->id = $ADR_GPK; 
+          $address->serviceCount = $ADR_srCount;         		
 		  $address->customerId = $ADR_CSR_GFK;
 		  $address->vendorId = $ADR_VDR_GFK;
 		  $address->potentialVendorId = $ADR_PVD_GFK;
