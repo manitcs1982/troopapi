@@ -24,7 +24,7 @@ $context  = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
 
 $service = json_decode($result);
-
+print_r($service);
 $html = '
 <!DOCTYPE html>
 <html lang="en">
@@ -177,7 +177,7 @@ $html = '
       <div id="logo">
         <img style="width: 90px;" src="http://13.233.85.98/OncefyxdWeb/images/ic_launcher_round.png">
       </div>
-      <h1>#'.$service->referenceId.'</h1>
+      <h1>#'.$service[0]->referenceId.'</h1>
         <table>
             <tr>
                 <td style="width: 300px; padding: 0px; vertical-align: top ">
@@ -187,7 +187,7 @@ $html = '
                             	<table>
                             		<tr><td style="height: 30px;">PRODUCT</td></tr>';
                             		
-                            		foreach($service->serviceItems as $items){
+                            		foreach($service[0]->serviceItems as $items){
 	                            		$html = $html.'<tr><td style="height: 30px;">'.$items->name.'</td></tr>';
                             		}
 		                           	
@@ -195,9 +195,9 @@ $html = '
 	                        </td>
                             <td style="vertical-align: top;">
                             	<table>
-                            		<tr><td  style="height: 30px;">'.$service->productDetails->name.'</td></tr>';
+                            		<tr><td  style="height: 30px;">'.$service[0]->productDetails->name.'</td></tr>';
                             		
-                            		foreach($service->serviceItems as $items){
+                            		foreach($service[0]->serviceItems as $items){
 	                            		$html = $html.'<tr><td style="height: 30px;">'.$items->optionAnswer.'</td></tr>';
                             		}
 		                           	
@@ -234,7 +234,7 @@ $html = '
         </thead>
         <tbody>';
         
-  foreach($service->DefectsList as $defect){
+  foreach($service[0]->DefectsList as $defect){
 			
 		
           $html= $html . '<tr>            
@@ -248,11 +248,11 @@ $html = '
 	
         $html = $html.'<tr>
             <td colspan="3">DELIVERY CHARGE</td>
-            <td class="total">₹'.$service->deliveryFee.'</td>
+            <td class="total">₹'.$service[0]->deliveryFee.'</td>
           </tr>
           <tr>
             <td colspan="3" class="grand total">GRAND TOTAL</td>
-            <td class="grand total">₹'.$service->customerGrandTotal.'</td>
+            <td class="grand total">₹'.$service[0]->customerGrandTotal.'</td>
           </tr>
         </tbody>
       </table>     
