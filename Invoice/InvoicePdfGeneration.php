@@ -24,7 +24,7 @@ $context  = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
 
 $service = json_decode($result);
-print_r($service);
+//print_r($service);
 $html = '
 <!DOCTYPE html>
 <html lang="en">
