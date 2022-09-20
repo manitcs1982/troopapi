@@ -347,7 +347,7 @@ class Service{
 						inner join Address.Address VADR
 							on VADR.ADR_VDR_GFK = VDR.VDR_GPK
 						where  SVC_status=:status and SVC_LGT_GFK=:logisticsId 
-						 and VADR.ADR_status=1 and CADR.ADR_status=1
+						 and VADR.ADR_status=1 
 						order by SVC.SVC_createdOn, distance;";
 						
 						// SVC_pickUpDate=:pickUpDate and SVC_pickUpSlot=:pickUpSlot and
@@ -392,7 +392,7 @@ class Service{
 						inner join Address.Address VADR
 							on VADR.ADR_VDR_GFK = VDR.VDR_GPK
 						where SVC_status=:status and SVC_LGT_GFK=:logisticsId 
-						 and VADR.ADR_status=1 and CADR.ADR_status=1
+						 and VADR.ADR_status=1 
 						order by SVC.SVC_createdOn, distance;";
 				$result = $this->conn->prepare($sql);				
 				$this->status=htmlspecialchars(strip_tags($this->status));				
@@ -431,7 +431,7 @@ class Service{
 						inner join Address.Address VADR
 							on VADR.ADR_VDR_GFK = VDR.VDR_GPK
 						where SVC_status=:status and SVC_LGT_GFK=:logisticsId 
-						 and VADR.ADR_status=1 and CADR.ADR_status=1
+						 and VADR.ADR_status=1 
 						order by SVC.SVC_createdOn, distance;";
 						//SVC_pickUpDate=:pickUpDate and SVC_pickUpSlot=:pickUpSlot and 
 				$result = $this->conn->prepare($sql);
@@ -500,7 +500,7 @@ class Service{
 						inner join Address.Address VADR
 							on VADR.ADR_VDR_GFK = VDR.VDR_GPK
 						where SVC_LGT_GFK=:logisticsId and SVC_status=:status 
-						 and VADR.ADR_status=1 and CADR.ADR_status=1
+						 and VADR.ADR_status=1 
 						order by SVC.SVC_createdOn desc, distance";
 				
 				$result = $this->conn->prepare($sql);
