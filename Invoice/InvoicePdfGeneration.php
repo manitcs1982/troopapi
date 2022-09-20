@@ -169,6 +169,7 @@ $html = '
             padding: 8px 0;
             text-align: center;
         }
+        
     </style>
   </head>
   <body>
@@ -176,17 +177,17 @@ $html = '
       <div id="logo">
         <img style="width: 90px;" src="http://13.233.85.98/OncefyxdWeb/images/ic_launcher_round.png">
       </div>
-      <h1>#'.$service[0]->referenceId.'</h1>
+      <h1>#'.$service->referenceId.'</h1>
         <table>
             <tr>
                 <td style="width: 300px; padding: 0px; vertical-align: top ">
-                <table>
+                <table id="rows">
                         <tr>
                             <td style="vertical-align: top;">
                             	<table>
                             		<tr><td style="height: 30px;">PRODUCT</td></tr>';
                             		
-                            		foreach($service[0]->serviceItems as $items){
+                            		foreach($service->serviceItems as $items){
 	                            		$html = $html.'<tr><td style="height: 30px;">'.$items->name.'</td></tr>';
                             		}
 		                           	
@@ -194,9 +195,9 @@ $html = '
 	                        </td>
                             <td style="vertical-align: top;">
                             	<table>
-                            		<tr><td  style="height: 30px;">'.$service[0]->productDetails->name.'</td></tr>';
+                            		<tr><td  style="height: 30px;">'.$service->productDetails->name.'</td></tr>';
                             		
-                            		foreach($service[0]->serviceItems as $items){
+                            		foreach($service->serviceItems as $items){
 	                            		$html = $html.'<tr><td style="height: 30px;">'.$items->optionAnswer.'</td></tr>';
                             		}
 		                           	
@@ -214,7 +215,7 @@ $html = '
                 <td></td>
                 <td></td>
                 <td style="vertical-align: top;width: 300px;">
-                	<p>SHIPPING ADDRESS:</p>
+                	<p>HELPDESK ADDRESS:</p>
                     <p>Oncefyxd office, Adyar, Chennai - 600 020</p>
                            
                 </td>
@@ -233,7 +234,7 @@ $html = '
         </thead>
         <tbody>';
         
-  foreach($service[0]->DefectsList as $defect){
+  foreach($service->DefectsList as $defect){
 			
 		
           $html= $html . '<tr>            
@@ -247,11 +248,11 @@ $html = '
 	
         $html = $html.'<tr>
             <td colspan="3">DELIVERY CHARGE</td>
-            <td class="total">₹'.$service[0]->deliveryFee.'</td>
+            <td class="total">₹'.$service->deliveryFee.'</td>
           </tr>
           <tr>
             <td colspan="3" class="grand total">GRAND TOTAL</td>
-            <td class="grand total">₹'.$service[0]->customerGrandTotal.'</td>
+            <td class="grand total">₹'.$service->customerGrandTotal.'</td>
           </tr>
         </tbody>
       </table>     
@@ -281,7 +282,9 @@ $pdffile = 'PDF/'.$_GET['fileName'].'.pdf';
 
 $mpdf->Output($pdffile);
 
-echo '{"pdfPath" : "http://13.233.85.98/Troop/Invoice/PDF/'.$_GET['fileName'].'.pdf"}';
+//echo $html;
+
+echo '{"pdfPath" : "'.$invoicePdfPath.$_GET['fileName'].'.pdf"}';
 
 
  ?>
