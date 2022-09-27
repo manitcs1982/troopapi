@@ -64,8 +64,17 @@ if($result){
 		  $service->notes = $SVC_notes; $service->isTurnOn = $SVC_isTurnOn;
 		  $service->createdOn = $SVC_createdOn;		
 		  $service->isCancelled = $SVC_isCancelled;  
-		  $service->defectAudioPath = $defectAudioDBPath.$SVC_defectAudioPath;		
-		  $service->fixedVideoPath = $fixedVideoDBPath.$SVC_fixedVideoPath; 
+		  if($SVC_defectAudioPath!=''){	 
+		 		 $service->defectAudioPath = $defectAudioDBPath.$SVC_defectAudioPath;
+			}else{
+				$service->defectAudioPath = '';
+			}
+		if($SVC_fixedVideoPath!=''){	 
+	 		 $service->fixedVideoPath = $fixedVideoDBPath.$SVC_fixedVideoPath; 
+		}else{
+			$service->fixedVideoPath = '';
+		}
+		  
 		  $service->modifiedOn = $SVC_modifiedOn; $service->isReopened = $SVC_isReopened; $service->reopenSRId = $SVC_reopenSRId; $service->reopenReferenceId = $SVC_reopenReferenceId; $service->reopenReason = $SVC_reopenReason;		
 		  
 		array_push($serviceArray,$service);
