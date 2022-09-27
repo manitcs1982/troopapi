@@ -44,8 +44,12 @@ if($result){
           $serviceDefects->vendorPrice = $SVD_vendorPrice;       		
 		  $serviceDefects->customerPrice = $SVD_customerPrice;
 		  $serviceDefects->status = $SVD_status;      
-		  $serviceDefects->quantity = $SVD_quantity;		  		  	  
-		  $serviceDefects->imageUrl = $defectAudioDBPath.$SVD_imageUrl;
+		  $serviceDefects->quantity = $SVD_quantity;	
+		  if($SVD_imageUrl!=''){	  		  	  
+		  		$serviceDefects->imageUrl = $defectAudioDBPath.$SVD_imageUrl;
+		  }else{
+				$serviceDefects->imageUrl = $SVD_imageUrl;
+		  }
 		  $serviceDefects->imageDescription = $SVD_imageDescription;		  
 		  $serviceDefects->nativeImageDescription = $SVD_nativeImageDescription;	
 		  $serviceDefects->GSTPercentage = $SVD_GSTPercentage;	
