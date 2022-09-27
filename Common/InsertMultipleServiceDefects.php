@@ -35,7 +35,9 @@ foreach($data as $defects){
 	$serviceDefects->customerPrice = $defects->quantity*$defects->customerPrice;
 	$serviceDefects->status = $defects->status;
 	$serviceDefects->quantity = $defects->quantity;
-	$serviceDefects->imageUrl = $defects->imageUrl;
+	$name = pathinfo(parse_url($url)['path'], $defects->imageUrl);
+	$ext = pathinfo(parse_url($url)['path'], $defects->imageUrl);
+	$serviceDefects->imageUrl = $name.'.'.$ext;
 	$serviceDefects->imageDescription = $defects->imageDescription;
 	$serviceDefects->GSTPercentage = $defects->GSTPercentage;
 	$serviceDefects->customerDisplayPrice = $defects->quantity*$defects->customerDisplayPrice;
