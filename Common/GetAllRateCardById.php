@@ -33,7 +33,11 @@ if($result){
       while ($row = $result->fetch(PDO::FETCH_ASSOC))
       {
           extract($row);          		
-          $rateCard->imageUrl = $defectAudioDBPath.$RCM_imageUrl;
+          if($RCM_imageUrl!=''){       
+          		$rateCard->imageUrl = $defectImageDBPath.$RCM_imageUrl;
+		  }else{
+		  		$rateCard->imageUrl = '';
+		  }
           $rateCard->id = $RCM_GPK;          		
 		  $rateCard->imageDescription = $RCM_imageDescription;
 		  $rateCard->userDescription = $RCM_userDescription;

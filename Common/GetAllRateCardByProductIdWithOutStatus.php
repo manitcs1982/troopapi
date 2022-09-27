@@ -36,7 +36,11 @@ if($result){
       	  $rateCard = new RateCard($db);
       	  
           extract($row);          		
-          $rateCard->imageUrl = $defectAudioDBPath.$RCM_imageUrl;
+          if($RCM_imageUrl!=''){       
+          		$rateCard->imageUrl = $defectImageDBPath.$RCM_imageUrl;
+		  }else{
+		  		$rateCard->imageUrl = '';
+		  }
           $rateCard->id = $RCM_GPK;  
           $rateCard->productId = $RCM_PDM_GFK;  		  
 		  $rateCard->imageDescription = $RCM_imageDescription;
