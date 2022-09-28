@@ -172,10 +172,10 @@ $html = '
         
     </style>
   </head>
-  <body>
+  <body> 
     <header class="clearfix">
       <div id="logo">
-        <img style="width: 90px;" src="../images/ic_launcher_round.png">
+        <img style="width: 90px;" src="https://oncefyxdblob.blob.core.windows.net/images/InvoiceLogo.png">
       </div>
       <h1>#'.$service[0]->referenceId.'</h1>
         <table>
@@ -195,7 +195,7 @@ $html = '
 	                        </td>
                             <td style="vertical-align: top;">
                             	<table>
-                            		<tr><td  style="height: 30px;">'.$service[0]->productDetails->name.'</td></tr>';
+                            		<tr><td style="height: 30px;">'.$service[0]->productDetails->name.'</td></tr>';
                             		
                             		foreach($service[0]->serviceItems as $items){
 	                            		$html = $html.'<tr><td style="height: 30px;">'.$items->optionAnswer.'</td></tr>';
