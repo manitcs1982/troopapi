@@ -175,7 +175,7 @@ $html = '
   <body>
     <header class="clearfix">
       <div id="logo">
-        <img style="width: 90px;" src="http://13.233.85.98/OncefyxdWeb/images/ic_launcher_round.png">
+        <img style="width: 90px;" src="../Images/ic_launcher_round.png">
       </div>
       <h1>#'.$service[0]->referenceId.'</h1>
         <table>
