@@ -46,7 +46,7 @@ if($result){
 		  $serviceDefects->status = $SVD_status;      
 		  $serviceDefects->quantity = $SVD_quantity;	
 		  if($SVD_imageUrl!=''){	  		  	  
-		  		$serviceDefects->imageUrl = $defectAudioDBPath.$SVD_imageUrl;
+		  		$serviceDefects->imageUrl = $defectImageDBPath.$SVD_imageUrl;
 		  }else{
 				$serviceDefects->imageUrl = $SVD_imageUrl;
 		  }
