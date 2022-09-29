@@ -44,16 +44,14 @@ if (isset($_FILES['file'])) {
 	$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
 	$currentDirectory = getcwd();
-	$imageDirectory = str_replace("Common","Images/Defect/",$currentDirectory);
-	
-	//$imageDirectory = "http://13.233.85.98/Troop/Images/RateCard/";
+	$imageDirectory = str_replace("Common","Images/Defect/",$currentDirectory);	
 	
 	$imageDirectory = $imageDirectory.$rateCard->id."_".$rateCard->productId."_defect.".$extension;
 	//$imageUrl = $imageDirectory.".".$extension;
 	$isUploaded = UploadImage($_FILES['file'],$imageDirectory);
 	if ($isUploaded==1) {
 		$rateCard->modifiedOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())));
-		$rateCard->imageUrl = "http://13.233.85.98/Troop/Images/Defect/".$rateCard->id."_".$rateCard->productId."_defect.".$extension;
+		$rateCard->imageUrl = $defectImageDBPath.$rateCard->id."_".$rateCard->productId."_defect.".$extension;
 		$result = $rateCard->UpdateRateCard();
 	} else {
 		$rateCard->error = $isUploaded;
