@@ -35,10 +35,8 @@ foreach($data as $defects){
 	$serviceDefects->customerPrice = $defects->quantity*$defects->customerPrice;
 	$serviceDefects->status = $defects->status;
 	$serviceDefects->quantity = $defects->quantity;
-	if($defects->imageUrl!=''){
-		$name = pathinfo(parse_url($url)['path'], $defects->imageUrl);
-		$ext = pathinfo(parse_url($url)['path'], $defects->imageUrl);
-		$serviceDefects->imageUrl = $name.'.'.$ext;
+	if($defects->imageUrl!=''){		
+		$serviceDefects->imageUrl = pathinfo($defects->imageUrl,PATHINFO_BASENAME);		
 	}else{
 		$serviceDefects->imageUrl = '';
 	}
