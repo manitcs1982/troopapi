@@ -1,8 +1,10 @@
 <?php
  $apiRootPath = "https://oncefyxd.com/Common/"; 
- //$apiRootPath = "http://localhost:80/Troop/Common/";
- 
  $invoicePdfPath = "https://oncefyxd.com/Invoice/PDF/";
+ //$apiRootPath = "http://localhost:80/Troop/Common/";
+ //$invoicePdfPath = "http://localhost:80/Troop/Common/";
+ 
+ 
  
  //date_default_timezone_set('Asia/Kolkata');
  date_default_timezone_set("Asia/Calcutta");   //India time (GMT+5:30)
@@ -32,12 +34,13 @@
  $chatMediaPath = 'chatmedia';
  $fixedVideoPath = 'fixedvideo';
  $defectAudioPath = 'defectaudio';
- $defectAudioPath = 'defectaudio';
+ $defectImagePath = 'defect';
  
  $customerProductDBPath = 'https://oncefyxdblob.blob.core.windows.net/customerproduct/';
  $chatMediaDBPath = 'https://oncefyxdblob.blob.core.windows.net/chatmedia/';
  $fixedVideoDBPath = 'https://oncefyxdblob.blob.core.windows.net/fixedvideo/';
  $defectAudioDBPath = 'https://oncefyxdblob.blob.core.windows.net/defectaudio/';
+ $defectImageDBPath = 'https://oncefyxdblob.blob.core.windows.net/defect/';
  $ConstantValuesDBPath = 'https://oncefyxdblob.blob.core.windows.net/banner/';
  $ProductDBPath = 'https://oncefyxdblob.blob.core.windows.net/product/';
  
