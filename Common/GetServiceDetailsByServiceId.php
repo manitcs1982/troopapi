@@ -64,6 +64,11 @@ if($result){
 		  $service->notes = $SVC_notes; $service->isTurnOn = $SVC_isTurnOn;
 		  $service->createdOn = $SVC_createdOn;		
 		  $service->isCancelled = $SVC_isCancelled;  
+		  $service->vendorBusinessOwnerName = $SVC_vendorBusinessOwnerName;	 
+		  $service->vendorBusinessName = $SVC_vendorBusinessName;	 
+		  $service->logisticsName = $SVC_logisticsName;	 
+		  $service->vendorPhoneNumber = $SVC_vendorPhoneNumber;	 
+		  $service->logisticsPhoneNumber = $SVC_logisticsPhoneNumber;
 		  if($SVC_defectAudioPath!=''){	 
 		 		 $service->defectAudioPath = $defectAudioDBPath.$SVC_defectAudioPath;
 			}else{
