@@ -65,8 +65,8 @@ if($result){
 		  $service->createdOn = $SVC_createdOn;		  
 		  $service->modifiedOn = $SVC_modifiedOn; $service->isReopened = $SVC_isReopened; $service->reopenSRId = $SVC_reopenSRId; $service->reopenReferenceId = $SVC_reopenReferenceId; $service->reopenReason = $SVC_reopenReason;	  
 		  $service->isCancelled = $SVC_isCancelled;	 
-		  $service->isCancelled = $SVC_vendorBusinessOwnerName;	 
-		  $service->isCancelled = $SVC_vendorBusinessName;	 
+		  $service->vendorBusinessOwnerName = $SVC_vendorBusinessOwnerName;	 
+		  $service->vendorBusinessName = $SVC_vendorBusinessName;	 
 		  $service->logisticsName = $SVC_logisticsName;	 
 		  $service->vendorPhoneNumber = $SVC_vendorPhoneNumber;	 
 		  $service->logisticsPhoneNumber = $SVC_logisticsPhoneNumber;
