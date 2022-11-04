@@ -64,8 +64,13 @@ if($result){
 		  $service->dropSlot = $SVC_dropSlot;
 		  $service->notes = $SVC_notes; $service->isTurnOn = $SVC_isTurnOn;
 		  $service->createdOn = $SVC_createdOn;		  
-		  $service->modifiedOn = $SVC_modifiedOn; $service->isReopened = $SVC_isReopened; $service->reopenSRId = $SVC_reopenSRId; $service->reopenReferenceId = $SVC_reopenReferenceId; $service->reopenReason = $SVC_reopenReason;	  
+		  $service->modifiedOn = $SVC_modifiedOn; $service->isReopened = $SVC_isReopened; $service->reopenSRId = $SVC_reopenSRId; $service->reopenReferenceId = $SVC_reopenReferenceId; $service->reopenReason = $SVC_reopenReason;	  		  	
 		  $service->isCancelled = $SVC_isCancelled;	 
+		  $service->vendorBusinessOwnerName = $SVC_vendorBusinessOwnerName;	 
+		  $service->vendorBusinessName = $SVC_vendorBusinessName;	 
+		  $service->logisticsName = $SVC_logisticsName;	 
+		  $service->vendorPhoneNumber = $SVC_vendorPhoneNumber;	 
+		  $service->logisticsPhoneNumber = $SVC_logisticsPhoneNumber;
 		    $service->fixedVideoPath = $fixedVideoDBPath.$SVC_fixedVideoPath;
 		  $service->defectAudioPath = $defectAudioDBPath.$SVC_defectAudioPath;
 		  
@@ -86,137 +91,7 @@ if($result){
 			$result = file_get_contents($url, false, $context);
 			
 			$array->customerDetails = json_decode($result);
-      
-      		$url = $apiRootPath.'GetAddressByAddressId.php?addressId='.$array->customerAddressId;		
-			$options = array(
-			    'http' => array(
-			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			        'method'  => 'GET',		        
-			    ),
-			);			
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-			
-			$array->customerAddress = json_decode($result);
-			
-			$url = $apiRootPath.'GetAddressByAddressId.php?addressId='.$array->vendorAddressId;
-			$options = array(
-			'http' => array(
-			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			'method'  => 'GET',
-			),
-			);
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-
-			$array->vendorAddress = json_decode($result);
-					
-			
-			$url = $apiRootPath.'GetProductByProductId.php?productId='.$array->productId;		
-			$options = array(
-			    'http' => array(
-			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			        'method'  => 'GET',		        
-			    ),
-			);			
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-			
-			$array->productDetails = json_decode($result);
-			
-			$url = $apiRootPath.'GetServiceItemsByServiceId.php?serviceId='.$array->serviceId;
-			  $options = array(
-			  'http' => array(
-			  'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			  'method'  => 'GET',
-			  ),
-		  	);
-		    $context  = stream_context_create($options);
-		    $result = file_get_contents($url, false, $context);
-
-		    $array->serviceItems = json_decode($result);
-			
-			
-			$url = $apiRootPath.'GetAllCustomerProductInfoByCustomerProductId.php?customerProductId='.$array->customerProductId;		
-			$options = array(
-			    'http' => array(
-			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			        'method'  => 'GET',		        
-			    ),
-			);			
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);		
-			$array->customerProductDetails = json_decode($result);
-			
-			$url = $apiRootPath.'GetAllServicesDefectsByServiceId.php?serviceId='.$array->serviceId;		
-			$options = array(
-			    'http' => array(
-			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			        'method'  => 'GET',		        
-			    ),
-			);			
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-			
-			$array->DefectsList = json_decode($result);
-			
-			$url = $apiRootPath.'GetVendorDetailsById.php?vendorId='.$array->vendorId;
-			$options = array(
-			'http' => array(
-			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			'method'  => 'GET',
-			),
-			);
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-			$array->vendorDetails = json_decode($result);
-			
-			
-			$url = $apiRootPath.'GetLogisticsById.php?id='.$array->logisticsId; //.$array->vendorId;
-			$options = array(
-			'http' => array(
-			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			'method'  => 'GET',
-			),
-			);
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-			$array->logisticsDetails = json_decode($result);
-			
-			$url = $apiRootPath.'GetAllServicesStatusByServiceId.php?serviceId='.$array->serviceId; //.$array->vendorId;
-			$options = array(
-			'http' => array(
-			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			'method'  => 'GET',
-			),
-			);
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-			$array->statusList = json_decode($result);
-			
-			$url = $apiRootPath.'GetReportsByServiceId.php?serviceId='.$array->serviceId; //.$array->vendorId;
-			$options = array(
-			'http' => array(
-			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			'method'  => 'GET',
-			),
-			);
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-			$array->reportList = json_decode($result);
-			
-			$url = $apiRootPath.'GetAllPaymentDetailsByServiceId.php?serviceId='.$array->serviceId;		
-			$options = array(
-			    'http' => array(
-			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			        'method'  => 'GET',		        
-			    ),
-			);			
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-			
-			$array->PaymentDetails = json_decode($result);
-				
+    				
 			array_push($serviceResultArray,$array);
 			
 	  }	

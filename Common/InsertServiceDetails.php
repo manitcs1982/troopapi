@@ -83,9 +83,12 @@ else{
 	$context  = stream_context_create($options);
 	$result = file_get_contents($url, false, $context);
 	$availableVendor = json_decode($result);
-
+	
 	if($availableVendor->error != "No records found"){
 		$service->vendorId = $availableVendor->vendorId;	
+		$service->vendorBusinessOwnerName = $availableVendor->businessOwnerName;	
+		$service->vendorBusinessName = $availableVendor->businessName;	
+		$service->vendorPhoneNumber = $availableVendor->alternatePhoneNo1;	
 	}else{
 		$service->error = "No available vendor";
 		echo json_encode($service); //converting the output data into JSON
@@ -107,6 +110,8 @@ $availableLogistics = json_decode($result);
 
 if ($availableLogistics->error != "No records found") {
 	$service->logisticsId =$availableLogistics->id;
+	$service->logisticsName =$availableLogistics->name;
+	$service->logisticsPhoneNumber =$availableLogistics->phoneNumber;
 } else {
 	$service->error = "No available logistics";
 	echo json_encode($service); //converting the output data into JSON
@@ -216,6 +221,7 @@ if($result){
 		$context  = stream_context_create($options);
 		$result = file_get_contents($url, false, $context);
 		//print_r($result);
+		
  		echo json_encode($service); //converting the output data into JSON
 }else{
   echo json_encode($service); //converting the output data into JSON
