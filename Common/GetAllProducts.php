@@ -40,6 +40,7 @@ if($result){
           $product->name = $PDM_name;
           $product->description = $PDM_description;
           $product->imageUrl = $ProductDBPath.$PDM_imageUrl;          		
+          $product->nativeImageUrl = $ProductDBPath.$PDM_nativeImageUrl;          		
 		  $product->status = $PDM_status;
 		  $product->isTurnOnRequired = $PDM_isTurnOnRequired;
 		  $product->note = $PDM_note;		  
