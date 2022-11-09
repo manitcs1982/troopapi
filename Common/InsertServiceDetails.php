@@ -88,11 +88,15 @@ else{
 		$service->vendorId = $availableVendor->vendorId;	
 		$service->vendorBusinessOwnerName = $availableVendor->businessOwnerName;	
 		$service->vendorBusinessName = $availableVendor->businessName;	
-		$service->vendorPhoneNumber = $availableVendor->alternatePhoneNo1;	
+		$service->vendorPhoneNumber = $availableVendor->phone;	
 	}else{
-		$service->error = "No available vendor";
-		echo json_encode($service); //converting the output data into JSON
-		die;
+		//$service->error = "No available vendor";
+		$service->vendorId = 0;	
+		$service->vendorBusinessOwnerName = "";	
+		$service->vendorBusinessName = "";	
+		$service->vendorPhoneNumber = "";	
+		//echo json_encode($service); //converting the output data into JSON
+		//die;
 	}
 }
 
@@ -113,9 +117,12 @@ if ($availableLogistics->error != "No records found") {
 	$service->logisticsName =$availableLogistics->name;
 	$service->logisticsPhoneNumber =$availableLogistics->phoneNumber;
 } else {
-	$service->error = "No available logistics";
-	echo json_encode($service); //converting the output data into JSON
-	die;
+	//$service->error = "No available logistics";
+	$service->logisticsId = 0;
+	$service->logisticsName = "";
+	$service->logisticsPhoneNumber = "";
+	//echo json_encode($service); //converting the output data into JSON
+	//die;
 }
 
 	
