@@ -836,6 +836,19 @@ order by SVC_createdOn desc"; //
 				return false;
 			}
 		}
+		
+		public function GetAllUnassignedService(){			
+			try{
+				$sql = "select * from Service where SVC_VDR_GFK = 0 or SVC_LGT_GFK= 0  "; //
+				$result = $this->conn->prepare($sql);
+								
+				$result->execute();
+				return $result;
+			}catch(PDOException $e){
+				$this->error = "Error: ".$e->getMessage();
+				return false;
+			}
+		}
 			
 }
 ?>
