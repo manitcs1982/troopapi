@@ -40,10 +40,16 @@ if (isset($_GET['logisticsNumber'])) {
 	$notificationMessage = str_replace("<logistics ph no.>",$_GET['logisticsNumber'],$notificationMessage);
 	$notificationNativeMessage = str_replace("<logistics ph no.>",$_GET['logisticsNumber'],$notificationNativeMessage);
 }
+if (isset($_GET['CustomizedMessage'])) {
+	$notificationMessage = str_replace("<CustomizedMessage>",$_GET['CustomizedMessage'],$notificationMessage);
+	$notificationNativeMessage = str_replace("<CustomizedMessage>",$_GET['CustomizedMessage'],$notificationNativeMessage);
+}
 
 $notificationDetails->notificationMessage = $notificationMessage;
 $notificationDetails->notificationNativeMessage = $notificationNativeMessage;
 $result= '';
+
+
 
 if (strpos($notificationDetails->notificationPerson, 'L') !== false) {
 	$apiKey = $logisticsApiKey; //from config
@@ -78,7 +84,7 @@ if (strpos($notificationDetails->notificationPerson, 'L') !== false) {
 	);
 	$context  = stream_context_create($options);
 	$result = file_get_contents($url, false, $context);		
-	
+	print_r($result);
 	
 } else if (strpos($notificationDetails->notificationPerson, 'V') !== false) {
 	$apiKey = $vendorApiKey; //from config
