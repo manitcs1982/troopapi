@@ -21,11 +21,12 @@ $service = new Service($db);
 
 $service->serviceId = $data->serviceId;
 $service->vendorId = $data->vendorId;
-$service->logisticsName =$data->name;
-$service->logisticsPhoneNumber =$data->phoneNumber;
-$service->vendorBusinessOwnerName = $data->businessOwnerName;	
-$service->vendorBusinessName = $data->businessName;	
-$service->vendorPhoneNumber = $data->phone;
+$service->logisticsId = $data->logisticsId;
+$service->logisticsName =$data->logisticsName;
+$service->logisticsPhoneNumber =$data->logisticsPhoneNumber;
+$service->vendorBusinessOwnerName = $data->vendorBusinessOwnerName;	
+$service->vendorBusinessName = $data->vendorBusinessName;	
+$service->vendorPhoneNumber = $data->vendorPhoneNumber;
 
 /*
 $service->customerId = $data->customerId;
