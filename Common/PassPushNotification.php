@@ -84,7 +84,7 @@ if (strpos($notificationDetails->notificationPerson, 'L') !== false) {
 	);
 	$context  = stream_context_create($options);
 	$result = file_get_contents($url, false, $context);		
-	print_r($result);
+	//print_r($result);
 	
 } else if (strpos($notificationDetails->notificationPerson, 'V') !== false) {
 	$apiKey = $vendorApiKey; //from config
