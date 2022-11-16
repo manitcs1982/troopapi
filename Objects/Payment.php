@@ -143,7 +143,7 @@ class Payment{
 
 			try{
 				
-				$sql = "Select * from Payment limit 5";
+				$sql = "Select * from Payment";
 			    $result = $this->conn->prepare($sql);
 			    $this->customerId=htmlspecialchars(strip_tags($this->customerId));
 				$result->bindParam(":customerId", $this->customerId);				
