@@ -859,6 +859,29 @@ order by SVC_createdOn desc"; //
 				return false;
 			}
 		}
+		
+		public function UpdatePickUpSlot(){
+			try{
+				
+				$sql = "Update Service Set SVC_pickUpDate=:pickUpDate,SVC_pickUpSlot=:pickUpSlot,SVC_modifiedOn=:modifiedOn where find_in_set(SVC_GPK,:serviceId)";
+			    $result = $this->conn->prepare($sql);
+			    $this->serviceId=htmlspecialchars(strip_tags($this->serviceId));
+				$result->bindParam(":serviceId", $this->serviceId);				
+                $this->pickUpDate=htmlspecialchars(strip_tags($this->pickUpDate));
+				$result->bindParam(":pickUpDate", $this->pickUpDate);				
+				$this->pickUpSlot=htmlspecialchars(strip_tags($this->pickUpSlot));
+				$result->bindParam(":pickUpSlot", $this->pickUpSlot);
+                $this->modifiedOn=htmlspecialchars(strip_tags($this->modifiedOn));
+				$result->bindParam(":modifiedOn", $this->modifiedOn);				
+				
+				$result->execute();
+														  			
+				return true;
+			}catch(PDOException $e){
+				$this->error = "Error: ".$e->getMessage();
+				return false;
+			}
+		}
 			
 }
 ?>
