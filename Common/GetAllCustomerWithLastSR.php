@@ -48,7 +48,7 @@ if($result){
 		  $customer->lastSRReferenceId = $SVC_referenceId;
 		  $customer->lastSRCreatedOn = $SVC_createdOn;
 		  $customer->lastSRStatus = $SVC_status;
-		  
+		  $customer->zipcodeList = $zipcodeList;
 		  array_push($customerArray, $customer);		  	  
       }
       
