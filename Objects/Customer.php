@@ -218,32 +218,7 @@ class Customer{
 		public function GetAllCustomerWithLastSR()
 		{
 			try {
-				$sql = "select * from Customer.Customer as C
-left join 
-(
-select * from Service.Service where SVC_GPK in
-(
-select max(SVC_GPK) from Service.Service where SVC_createdOn in
-(select max(SVC_createdOn) from Service.Service group by SVC_CST_GFK)
-group by SVC_CST_GFK
-)  
-) as S
-on S.SVC_CST_GFK=C.CSR_GPK
-order by S.SVC_GPK desc"; 
-				$result = $this->conn->prepare($sql);
-				
-				$result->execute();
-				return $result;
-			} catch (PDOException $e) {
-				$this->error = "Error: ".$e->getMessage();
-				return false;
-			}
-		}
-		
-		public function GetAllCustomerForNotificationByZipcode()
-		{
-			try {
-				$sql = "select C.*,group_concat(A.ADR_zipcode) as zipcodeList,S.* from Customer.Customer as C
+				$sql = "select *, group_concat(A.ADR_zipcode) as zipcodeList from Customer.Customer as C
 left join Address.Address as A on A.ADR_CSR_GFK = C.CSR_GPK and A.ADR_status=1 
 left join 
 (
@@ -256,15 +231,9 @@ group by SVC_CST_GFK
 ) as S
 on S.SVC_CST_GFK=C.CSR_GPK
 group by C.CSR_GPK
-Having find_in_set(:zipcode,zipcodeList)
-order by S.SVC_GPK desc
-
-
-
-"; 
+order by S.SVC_GPK desc"; 
 				$result = $this->conn->prepare($sql);
-				$this->zipcode=htmlspecialchars(strip_tags($this->zipcode));
-				$result->bindParam(":zipcode", $this->zipcode);
+				
 				$result->execute();
 				return $result;
 			} catch (PDOException $e) {
