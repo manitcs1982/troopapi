@@ -86,6 +86,7 @@ if ($push_type == 'topic') {
 	$response = $firebase->sendMultiple($regIds, $json,$apiKey);
 }
 
+//print_r($json);
 print_r($response);
 if($response){
   //echo true;

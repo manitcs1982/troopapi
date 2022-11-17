@@ -24,6 +24,8 @@ if(isset($data)){
 
 $notificationMessage = $notificationDetails->message;
 $notificationNativeMessage = $notificationDetails->nativeMessage;
+$notificationTitle = $notificationDetails->title;
+$notificationNativeTitle = $notificationDetails->nativeTitle;
 if (isset($_GET['referenceNumber'])) {
 	$notificationMessage = str_replace("<No>",$_GET['referenceNumber'],$notificationMessage);
 	$notificationNativeMessage = str_replace("<No>",$_GET['referenceNumber'],$notificationNativeMessage);
@@ -45,8 +47,15 @@ if (isset($_GET['CustomizedMessage'])) {
 	$notificationNativeMessage = str_replace("<CustomizedMessage>",$_GET['CustomizedMessage'],$notificationNativeMessage);
 }
 
+if (isset($_GET['CustomizedTitle'])) {
+	$notificationTitle= str_replace("<CustomizedTitle>",$_GET['CustomizedTitle'],$notificationTitle);
+	$notificationNativeTitle = str_replace("<CustomizedTitle>",$_GET['CustomizedTitle'],$notificationNativeTitle);
+}
+
 $notificationDetails->notificationMessage = $notificationMessage;
 $notificationDetails->notificationNativeMessage = $notificationNativeMessage;
+$notificationDetails->title = $notificationTitle;
+$notificationDetails->nativeTitle = $notificationNativeTitle;
 $result= '';
 
 
