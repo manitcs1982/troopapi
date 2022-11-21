@@ -48,7 +48,7 @@ class NotificationHistory{
     public function GetCustomerReminderNotificationHistoryBySRId(){			
         try{
              
-            $sql = "select * from Notification_History where NFH_type NFH_type in ('QuoteReminder1','QuoteReminder2','QuoteReminder3','QuoteReminder4','SlotReminder1','SlotReminder2','SlotReminder3','SlotReminder4') NFH_SVC_GFK= :serviceId order by NFH_createdOn desc"; //and PIN_status=1
+            $sql = "select * from Notification_History where NFH_type in ('QuoteReminder1','QuoteReminder2','QuoteReminder3','QuoteReminder4','SlotReminder1','SlotReminder2','SlotReminder3','SlotReminder4') and NFH_SVC_GFK= :serviceId order by NFH_createdOn desc"; //and PIN_status=1
             $result = $this->conn->prepare($sql);
             
             $this->serviceId=htmlspecialchars(strip_tags($this->serviceId));		
