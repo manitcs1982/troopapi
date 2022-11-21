@@ -91,7 +91,7 @@ if($result){
 			
 			$array->customerDetails = json_decode($result);    						
 			
-			$url = $apiRootPath.'GetCustomerReminderNotificationHistoryBySRId.php?id='.$array->serviceId;		
+			$url = $apiRootPath.'GetCustomerReminderNotificationHistoryBySRId.php?serviceId='.$array->serviceId;		
 			$options = array(
 			    'http' => array(
 			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
