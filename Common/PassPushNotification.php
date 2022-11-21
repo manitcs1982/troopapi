@@ -26,6 +26,8 @@ $notificationMessage = $notificationDetails->message;
 $notificationNativeMessage = $notificationDetails->nativeMessage;
 $notificationTitle = $notificationDetails->title;
 $notificationNativeTitle = $notificationDetails->nativeTitle;
+
+//Dynamic content replacements
 if (isset($_GET['referenceNumber'])) {
 	$notificationMessage = str_replace("<No>",$_GET['referenceNumber'],$notificationMessage);
 	$notificationNativeMessage = str_replace("<No>",$_GET['referenceNumber'],$notificationNativeMessage);
@@ -50,6 +52,10 @@ if (isset($_GET['CustomizedMessage'])) {
 if (isset($_GET['CustomizedTitle'])) {
 	$notificationTitle= str_replace("<CustomizedTitle>",$_GET['CustomizedTitle'],$notificationTitle);
 	$notificationNativeTitle = str_replace("<CustomizedTitle>",$_GET['CustomizedTitle'],$notificationNativeTitle);
+}
+if (isset($_GET['ReminderMessage'])) {
+	$notificationMessage = $_GET['ReminderMessage'];
+	$notificationNativeMessage = $_GET['ReminderMessage'];
 }
 
 $notificationDetails->notificationMessage = $notificationMessage;
@@ -77,7 +83,8 @@ if (strpos($notificationDetails->notificationPerson, 'L') !== false) {
 	$context  = stream_context_create($options);
 	$result = file_get_contents($url, false, $context);		
 	
-}else if (strpos($notificationDetails->notificationPerson, 'C') !== false) {
+}
+else if (strpos($notificationDetails->notificationPerson, 'C') !== false) {
 	$apiKey = $customerApiKey; //from config
 	//Get logistic details
 	$customerDetails = json_decode(file_get_contents($apiRootPath.'GetCustomerDetailsById.php?id='.$_GET['customerId']));	
