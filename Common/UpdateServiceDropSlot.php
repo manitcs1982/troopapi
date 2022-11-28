@@ -29,6 +29,23 @@ $service->modifiedOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())))
 $service->referenceNumber = $data->referenceNumber;
 $service->appliance = urlencode($data->appliance);
 
+$url = $apiRootPath.'GetServiceDescriptionByStatus.php?status='.$service->status;
+$options = array(
+'http' => array(
+'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+'method'  => 'GET',
+),);
+$context  = stream_context_create($options);
+$result = file_get_contents($url, false, $context);
+$SRDescription = json_decode($result);
+
+$service->statusDescription = '';
+if ($SRDescription->error != "No records found") {
+	$service->statusDescription = $SRDescription->description;	
+	$service->statusNativeDescription = $SRDescription->nativeDescription;	
+}
+
+
 $result = $service->UpdateServiceDropSlot();
 
 if($result){
