@@ -67,7 +67,8 @@ if($result){
 		  $service->isCancelled = $SVC_isCancelled;
 		  $service->fixedVideoPath = $SVC_fixedVideoPath;
 		  $service->defectAudioPath = $SVC_defectAudioPath;
-		  
+		  $service->statusDescription = $SVC_statusDescription;
+		  $service->statusNativeDescription = $SVC_statusNativeDescription;
 		  
 		  array_push($serviceArray,$service);
       }    

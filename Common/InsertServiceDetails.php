@@ -124,10 +124,25 @@ if ($availableLogistics->error != "No records found") {
 	//echo json_encode($service); //converting the output data into JSON
 	//die;
 }
-
 	
 //$service->vendorId = 97;	
 //$service->logisticsId = 1;
+
+$url = $apiRootPath.'GetServiceDescriptionByStatus.php?status='.$service->status;
+$options = array(
+'http' => array(
+'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+'method'  => 'GET',
+),);
+$context  = stream_context_create($options);
+$result = file_get_contents($url, false, $context);
+$SRDescription = json_decode($result);
+print_r($SRDescription);
+$service->statusDescription = '';
+if ($SRDescription->error != "No records found") {
+	$service->statusDescription = $SRDescription->description;	
+	$service->statusNativeDescription = $SRDescription->nativeDescription;	
+}
 
 $result = $service->InsertServiceDetails();
 
