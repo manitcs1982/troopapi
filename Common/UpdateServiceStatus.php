@@ -43,10 +43,14 @@ $context  = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
 $SRDescription = json_decode($result);
 
-$service->statusDescription = '';
+$service->statusDescription = ''; $service->statusNativeDescription='';
 if ($SRDescription->error != "No records found") {
 	$service->statusDescription = $SRDescription->description;	
 	$service->statusNativeDescription = $SRDescription->nativeDescription;	
+	if($service->status == 'awaiting_for_confirmation'){
+		$service->statusDescription = str_replace("<RepairCost>",$data->customerPrice,$service->statusDescription);
+		$service->statusNativeDescription = str_replace("<RepairCost>",$data->customerPrice,$service->statusNativeDescription);
+	}
 }
 
 if(strtoupper($data->status)==strtoupper('cancelled')){
@@ -369,22 +373,24 @@ if ($result) {
 
 	}
 	if (isset($data->defectAudio)) {
-
-		$fileName = $service->serviceId.'_defectAudio';
-		$imgUpload = imageUploadToDisk($data->defectAudio,$defectAudioPath,$fileName);
-		if ($imgUpload) {			
-			$service->defectAudioPath = $imgUpload;
-			$service->UpdateDefectAudioPath();
+		if($data->defectAudio !=''){
+			$fileName = $service->serviceId.'_defectAudio';
+			$imgUpload = imageUploadToDisk($data->defectAudio,$defectAudioPath,$fileName);
+			if ($imgUpload) {			
+				$service->defectAudioPath = $imgUpload;
+				$service->UpdateDefectAudioPath();
+			}
 		}
 	}
 		
 	if (isset($data->fixedVideo)) {
-
-		$fileName = $service->serviceId.'_fix';
-		$imgUpload = imageUploadToDisk($data->fixedVideo,$fixedVideoPath,$fileName);
-		if ($imgUpload) {			
-			$service->fixedVideoPath = $imgUpload;
-			$service->UpdateFixedVideoPath();
+		if($data->fixedVideo != ''){
+			$fileName = $service->serviceId.'_fix';
+			$imgUpload = imageUploadToDisk($data->fixedVideo,$fixedVideoPath,$fileName);
+			if ($imgUpload) {			
+				$service->fixedVideoPath = $imgUpload;
+				$service->UpdateFixedVideoPath();
+			}
 		}
 	}
 	

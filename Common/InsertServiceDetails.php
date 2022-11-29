@@ -137,7 +137,7 @@ $options = array(
 $context  = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
 $SRDescription = json_decode($result);
-print_r($SRDescription);
+
 $service->statusDescription = '';
 if ($SRDescription->error != "No records found") {
 	$service->statusDescription = $SRDescription->description;	

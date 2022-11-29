@@ -38,7 +38,7 @@ $context  = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
 $SRDescription = json_decode($result);
 
-$service->statusDescription = '';
+$service->statusDescription = ''; $service->statusNativeDescription='';
 if ($SRDescription->error != "No records found") {
 	$service->statusDescription = $SRDescription->description;	
 	$service->statusNativeDescription = $SRDescription->nativeDescription;	
