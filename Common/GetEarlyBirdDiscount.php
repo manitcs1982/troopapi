@@ -69,11 +69,17 @@ foreach ($userPersonalData as $array) {
                 $discountAmount = 0;
 			} else {
 				$discountAmount = $t['discountAmount'];
+				$discountName = $t['discountName'];
+				$discountReason = $t['discountReason'];
+				$discountDescription = $t['discountDescription'];
+				$discountPercentage = $t['discountPercentage'];
 			}
 
 
 		}
-		$data = array("isDiscountAvailable" => $isDiscountAvailable, "discountAmount" => $discountAmount);
+		$data = array("isDiscountAvailable" => $isDiscountAvailable, "discountAmount" => $discountAmount,
+		"discountName" => $discountName,"discountReason" => $discountReason,"discountDescription" => $discountDescription,
+		"discountPercentage" => $discountPercentage);
 		header("Content-Type: application/json");
 		echo json_encode($data);
 
