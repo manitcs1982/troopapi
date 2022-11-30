@@ -36,6 +36,11 @@ $userPersonalData = json_decode($result, true);
 $date = date('Y/m/d H:i:s', time());
 $discountAmount = 0;
 $isDiscountAvailable = "0";
+$discountName ="";
+$discountReason= "";
+$discountDescription ="";
+$discountPercentage ="";
+
 //echo $date;
 foreach ($userPersonalData as $array) {
 	// print_r($array);
