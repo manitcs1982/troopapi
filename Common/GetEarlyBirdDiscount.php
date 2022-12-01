@@ -82,9 +82,8 @@ foreach ($userPersonalData as $array) {
 
 
 		}
-		$data = array("isDiscountAvailable" => $isDiscountAvailable, "discountAmount" => $discountAmount,
-		"discountName" => $discountName,"discountReason" => $discountReason,"discountDescription" => $discountDescription,
-		"discountPercentage" => $discountPercentage);
+		$data = array("isDiscountAvailable" => $isDiscountAvailable, "amount" => $discountAmount,
+		"name" => $discountName,"description" => $discountDescription);
 		header("Content-Type: application/json");
 		echo json_encode($data);
 
