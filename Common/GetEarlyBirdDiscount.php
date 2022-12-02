@@ -45,7 +45,7 @@ $discountPercentage = "";
 foreach ($userPersonalData as $array) {
 	// print_r($array);
 
-	if ($array['status'] == 'ready_to_fixed') {
+	if ($array['status'] == 'awaiting_for_confirmation') {
 		$to_time = strtotime($array['date']);
 		$from_time = strtotime($date);
 		$minutes = round(abs($to_time - $from_time) / 60, 2) . " minute";
