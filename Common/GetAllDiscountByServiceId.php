@@ -32,10 +32,12 @@ $FinalDiscountList = array();
 $context = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
 
-$t = json_decode($result, true);			
-			
-if($t['isDiscountAvailable'] == 1 ){
-	array_push($FinalDiscountList,$t);	
+$t = json_decode($result, true);
+//echo $t;
+if ($t != "" && $t != null) {
+	if ($t['isDiscountAvailable'] == 1) {
+		array_push($FinalDiscountList, $t);
+	}
 }
 
 $url = $apiRootPath.'GetServiceDiscountDetailsbyServiceId.php?serviceId='.$service->serviceId;

@@ -36,10 +36,10 @@ $userPersonalData = json_decode($result, true);
 $date = date('Y/m/d H:i:s', time());
 $discountAmount = 0;
 $isDiscountAvailable = "0";
-$discountName ="";
-$discountReason= "";
-$discountDescription ="";
-$discountPercentage ="";
+$discountName = "";
+$discountReason = "";
+$discountDescription = "";
+$discountPercentage = "";
 
 //echo $date;
 foreach ($userPersonalData as $array) {
@@ -52,10 +52,26 @@ foreach ($userPersonalData as $array) {
 		//echo $minutes;
 		if (((int) date($minutes)) >= 120) {
 			$isDiscountAvailable = "0";
+			$serviceDiscountId = "0";
+			$isActive = "1";
+			$serviceId = "0";
+			$discountMasterId = "0";
+			$createdOn = "";
+			$modifiedOn = "";
+			$notes = "";
+			$error = "";
 
 
 		} else {
 			$isDiscountAvailable = "1";
+			$serviceDiscountId = "0";
+			$isActive = "1";
+			$serviceId = "0";
+			$discountMasterId = "0";
+			$createdOn = "";
+			$modifiedOn = "";
+			$notes = "";
+			$error = "";
 
 			$url = $apiRootPath . 'GetDiscountMasterByName.php?discountName=EarlyBird';
 			$options = array(
@@ -71,19 +87,33 @@ foreach ($userPersonalData as $array) {
 			$t = json_decode($result, true);
 			//echo $t['discountAmount'];
 			if (((int) date($minutes)) >= 120) {
-                $discountAmount = 0;
+				$discountAmount = 0;
+		
+
 			} else {
 				$discountAmount = $t['discountAmount'];
 				$discountName = $t['discountName'];
 				$discountReason = $t['discountReason'];
 				$discountDescription = $t['discountDescription'];
-				$discountPercentage = $t['discountPercentage'];
+
 			}
 
 
 		}
-		$data = array("isDiscountAvailable" => $isDiscountAvailable, "amount" => $discountAmount,
-		"name" => $discountName,"description" => $discountDescription);
+		$data = array(
+			"isDiscountAvailable" => $isDiscountAvailable,
+			"amount" => $discountAmount,
+			"name" => $discountName,
+			"description" => $discountDescription,
+			"serviceDiscountId" => $serviceDiscountId,
+			"serviceId" => $serviceId,
+			"discountMasterId" => $discountMasterId,
+			"isActive" => $isActive,
+			"createdOn" => $createdOn,
+			"modifiedOn" => $modifiedOn,
+			"notes" => $notes,
+			"error" => $error,
+		);
 		header("Content-Type: application/json");
 		echo json_encode($data);
 
