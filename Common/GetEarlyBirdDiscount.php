@@ -51,7 +51,7 @@ foreach ($userPersonalData as $array) {
 		$minutes = round(abs($to_time - $from_time) / 60, 2) . " minute";
 		//echo $minutes;
 		if (((int) date($minutes)) >= 120) {
-			$isDiscountAvailable = "0";
+			$isDiscountAvailable = 0;
 			$serviceDiscountId = "0";
 			$isActive = "1";
 			$serviceId = "0";
@@ -63,7 +63,7 @@ foreach ($userPersonalData as $array) {
 
 
 		} else {
-			$isDiscountAvailable = "1";
+			$isDiscountAvailable = 1;
 			$serviceDiscountId = "0";
 			$isActive = "1";
 			$serviceId = "0";
