@@ -896,6 +896,21 @@ order by SVC_createdOn desc"; //
 				return false;
 			}
 		}
+		
+		//Getting All Services by customerId
+        public function GetAllServiceCountByCustomerId(){			
+			try{
+				$sql = "select count(*) as SRCount from Service where SVC_CST_GFK=:customerId order by SVC_createdOn desc"; //
+				$result = $this->conn->prepare($sql);
+				$this->customerId=htmlspecialchars(strip_tags($this->customerId));		
+				$result->bindParam(":customerId", $this->customerId);
+				$result->execute();
+				return $result;
+			}catch(PDOException $e){
+				$this->error = "Error: ".$e->getMessage();
+				return false;
+			}
+		}
 			
 }
 ?>
