@@ -53,7 +53,23 @@ $payment->paymentMethod  = $razorResponse->method;
 $payment->createdOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())));
 
 $result = $payment->InsertPaymentDetails();
-
+if(isset($data->discountDetails)){
+	foreach($data->discountDetails as $discount){
+			$url = $apiRootPath.'InsertServiceDiscount.php';
+			
+			$data = array("serviceId" => $payment->serviceId, "discountMasterId" => $discount->discountMasterId, "name" => $discount->name,"isActive" => 1, "description"=>$discount->description,"amount" => $discount->amount,"name" => $discount->name);	
+						
+			$options = array(
+			    'http' => array(
+			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			        'method'  => 'POST',
+			        'content' => json_encode($data), 
+			    ),
+			);			
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);			
+	}
+}
 if($result){
  echo json_encode($payment); //converting the output data into JSON
 }else{

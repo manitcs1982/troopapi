@@ -16,7 +16,6 @@ include_once '../Objects/Service.php';
 $database = new Database(); //Declaring object for database class
 $db = $database->GetServiceConnection();
 
-
 $service = new Service($db);
 
 $service->customerId = $_GET['customerId'];
