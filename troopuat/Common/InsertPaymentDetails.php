@@ -49,6 +49,8 @@ $payment->paymentIdValue = $razorResponse->id;
 $payment->paidAmount  = $razorResponse->amount / 100;
 $payment->description  = $razorResponse->description;
 $payment->paymentMethod  = $razorResponse->method;
+$payment->type  = strtolower($data->type);
+$payment->stockId  = $data->stockId;
 
 $payment->createdOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())));
 

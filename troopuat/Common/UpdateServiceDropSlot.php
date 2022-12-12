@@ -29,6 +29,15 @@ $service->modifiedOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())))
 $service->referenceNumber = $data->referenceNumber;
 $service->appliance = urlencode($data->appliance);
 
+//Param for stocking
+$service->customerId = $data->customerId;
+$service->vendorId = $data->vendorId;
+$service->dropDate = $data->dropDate;
+$service->duration = $data->duration;
+$service->starttime = $data->starttime;
+$service->endtime = $data->endtime;
+$service->amount = $data->amount;
+
 $url = $apiRootPath.'GetServiceDescriptionByStatus.php?status='.$service->status;
 $options = array(
 'http' => array(
@@ -49,7 +58,22 @@ if ($SRDescription->error != "No records found") {
 $result = $service->UpdateServiceDropSlot();
 
 if($result){
-  $url = $apiRootPath.'InsertServiceStatus.php';
+	
+	//To Track stocking
+	$url = $apiRootPath.'InsertStocking.php';
+
+	$data = array("stockserviceId" => $service->serviceId, "stockcustomerId" => $service->customerId,  "stockvendorId" => $service->vendorId,  "duration" => $service->duration,  "starttime" => $service->starttime,  "endtime" => $service->endtime,  "amount" => $service->amount, "status" => $service->status, "stockIsActive" => "1");		
+	$options = array(
+	    'http' => array(
+	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+	        'method'  => 'POST',
+	        'content' => json_encode($data), 
+	    ),
+	);			
+	$context  = stream_context_create($options);
+	$result = file_get_contents($url, false, $context);	
+	
+  	$url = $apiRootPath.'InsertServiceStatus.php';
 	
 	$data = array("serviceId" => $service->serviceId, "status" => $service->status, "logisticsId" => "");		
 	$options = array(
