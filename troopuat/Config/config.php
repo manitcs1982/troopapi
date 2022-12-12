@@ -1,8 +1,17 @@
 <?php
+
+//Prod
  //$apiRootPath = "https://oncefyxd.com/Common/"; 
- $invoicePdfPath = "https://oncefyxd.com/Invoice/PDF/";
- $apiRootPath = "http://localhost/Troop/Common/";
+ //$invoicePdfPath = "https://oncefyxd.com/Invoice/PDF/";
+ 
+ // Local
+ //$apiRootPath = "http://localhost/Troop/Common/";
  //$invoicePdfPath = "http://localhost:80/Troop/Common/";
+ 
+ //UAT
+ $apiRootPath = "https://oncefyxd.com/troopuat/Common/"; 
+ $invoicePdfPath = "https://oncefyxd.com/troopuat/Invoice/PDF/";
+ 
  
  
  
