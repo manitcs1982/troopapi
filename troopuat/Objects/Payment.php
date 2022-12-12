@@ -40,7 +40,7 @@ class Payment{
 
 			try{
 
-				$sql = "Insert into Payment Set PMT_SVC_GFK=:serviceId,PMT_CSR_GFK=:customerId,PMT_VDR_GFK=:vendorId,PMT_LGT_GFK=:logisticsId,PMT_referenceNumber=:referenceNumber,PMT_customerTotal=:customerTotal,PMT_paymentIdValue=:paymentIdValue,PMT_paymentStatus=:paymentStatus,PMT_paymentMethod=:paymentMethod,PMT_description=:description,PMT_paidAmount=:paidAmount,PMT_isActive=:isActive,PMT_createdOn=:createdOn; Update Service SVC_isPaymentCompleted=1 where SVC_GPK=:serviceId";
+				$sql = "Insert into Payment Set PMT_SVC_GFK=:serviceId,PMT_CSR_GFK=:customerId,PMT_VDR_GFK=:vendorId,PMT_LGT_GFK=:logisticsId,PMT_referenceNumber=:referenceNumber,PMT_customerTotal=:customerTotal,PMT_paymentIdValue=:paymentIdValue,PMT_paymentStatus=:paymentStatus,PMT_paymentMethod=:paymentMethod,PMT_description=:description,PMT_paidAmount=:paidAmount,PMT_type=:type,PMT_STK_GFK=:stockId,PMT_isActive=:isActive,PMT_createdOn=:createdOn; Update Service SVC_isPaymentCompleted=1 where SVC_GPK=:serviceId";
 			    $result = $this->conn->prepare($sql);
 			    $this->serviceId=htmlspecialchars(strip_tags($this->serviceId));
 				$result->bindParam(":serviceId", $this->serviceId);
@@ -67,7 +67,11 @@ class Payment{
                 $this->isActive=htmlspecialchars(strip_tags($this->isActive));
 				$result->bindParam(":isActive", $this->isActive);                
 				$this->createdOn=htmlspecialchars(strip_tags($this->createdOn));
-				$result->bindParam(":createdOn", $this->createdOn);	
+				$result->bindParam(":createdOn", $this->createdOn);	                
+				$this->stockId=htmlspecialchars(strip_tags($this->stockId));
+				$result->bindParam(":stockId", $this->stockId);                
+				$this->type=htmlspecialchars(strip_tags($this->type));
+				$result->bindParam(":type", $this->type);	
 													
 				$result->execute();
 				$this->paymentId = $this->conn->lastInsertId();											  			
