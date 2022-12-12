@@ -55,6 +55,9 @@ class Service{
 		public $vendorPhoneNumber;		
 		public $logisticsPhoneNumber;		
 		public $statusDescription;		
+		public $stockId;		
+		public $starttime;		
+		public $endtime;		
 
 		public $error;
 		
