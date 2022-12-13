@@ -485,7 +485,7 @@ class Service{
 
 			try{
 				
-				$sql = "Update Service Set SVC_status=:status,SVC_LGT_GFK=:logisticsId, SVC_modifiedOn=:modifiedOn,,SVC_statusDescription=:statusDescription,SVC_statusNativeDescription=:statusNativeDescription where find_in_set(SVC_GPK,:serviceId)";
+				$sql = "Update Service Set SVC_status=:status,SVC_LGT_GFK=:logisticsId, SVC_modifiedOn=:modifiedOn,SVC_statusDescription=:statusDescription,SVC_statusNativeDescription=:statusNativeDescription where find_in_set(SVC_GPK,:serviceId)";
 			    $result = $this->conn->prepare($sql);
 			    $this->serviceId=htmlspecialchars(strip_tags($this->serviceId));
 				$result->bindParam(":serviceId", $this->serviceId);	
