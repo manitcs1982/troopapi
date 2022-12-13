@@ -58,6 +58,8 @@ class Service{
 		public $stockId;		
 		public $starttime;		
 		public $endtime;		
+		public $amount;		
+		public $discountAmount;
 
 		public $error;
 		
