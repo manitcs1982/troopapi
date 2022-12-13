@@ -69,6 +69,7 @@ if($result){
 		  $service->logisticsName = $SVC_logisticsName;	 
 		  $service->vendorPhoneNumber = $SVC_vendorPhoneNumber;	 
 		  $service->logisticsPhoneNumber = $SVC_logisticsPhoneNumber;
+		  $service->discountAmount = $SVC_discountAmount;
 		  if($SVC_defectAudioPath!=''){	 
 		 		 $service->defectAudioPath = $defectAudioDBPath.$SVC_defectAudioPath;
 			}else{
@@ -239,6 +240,18 @@ if($result){
 			$result = file_get_contents($url, false, $context);
 			
 			$array->PaymentDetails = json_decode($result);
+			
+			$url = $apiRootPath.'GetServiceDiscountDetailsbyServiceId.php?serviceId='.$array->serviceId;		
+			$options = array(
+			    'http' => array(
+			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			        'method'  => 'GET',		        
+			    ),
+			);			
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);
+			
+			$array->DiscountDetails = json_decode($result);
 				
 			array_push($serviceResultArray,$array);
 
