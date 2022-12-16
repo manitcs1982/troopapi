@@ -22,6 +22,7 @@ class ServiceDefects{
 		public $error;
 		
 		public $customerTotal;
+		public $customerGrandTotal;
 		public $vendorTotal;
 		public $GSTAmount;
 		public $nativeImageDescription;
