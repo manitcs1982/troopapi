@@ -68,13 +68,14 @@ if(count($data)===$loopCount){
 	$service->customerTotal = $customerPrice;
 	$service->vendorTotal = $vendorPrice;
 	$service->customerDisplayPrice = $customerDisplayPrice;	
-	$service->deliveryFee = 70.8;
+	$service->deliveryFee = $deliveryFeeConfig;
 	$service->serviceCharge = 0;	
 	$service->GSTAmount = 0;	//already added
 	$service->customerGrandTotal = $customerDisplayPrice + $service->deliveryFee;	
 	$service->customerDisplayTotal = $customerDisplayPrice;
 	$service->modifiedOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())));
 	
+	$serviceDefectsArray[0]->customerGrandTotal = $service->customerGrandTotal;
 	$result = $service->UpdateServiceAmount();
 	
   echo json_encode($serviceDefectsArray); //converting the output data into JSON
