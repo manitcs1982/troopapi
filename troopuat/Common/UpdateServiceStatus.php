@@ -31,6 +31,8 @@ $service->cancelledStatus = $data->cancelledStatus;
 $service->modifiedOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())));
 
 $service->referenceNumber = $data->referenceNumber;
+if (isset($data->defectAudio)) { $service->defectAudio = $data->defectAudio; }
+if (isset($data->fixedVideo)) { $service->fixedVideo = $data->fixedVideo; }
 $service->appliance = strtoupper(urlencode($data->appliance));
 
 $url = $apiRootPath.'GetServiceDescriptionByStatus.php?status='.$service->status;
@@ -372,21 +374,20 @@ if ($result) {
 		$result = file_get_contents($url, false, $context);		
 
 	}
-	if (isset($data->defectAudio)) {
-		if($data->defectAudio !=''){
-			$fileName = $service->serviceId.'_defectAudio';
-			$imgUpload = imageUploadToDisk($data->defectAudio,$defectAudioPath,$fileName);
+	if (isset($service->defectAudio)) {
+		if($service->defectAudio !=''){			
+			$imgUpload = imageUploadToDisk($service->defectAudio,$defectAudioPath,$fileName);
 			if ($imgUpload) {			
-				$service->defectAudioPath = $imgUpload;
+				echo $service->defectAudioPath = $imgUpload;
 				$service->UpdateDefectAudioPath();
 			}
 		}
 	}
 		
-	if (isset($data->fixedVideo)) {
-		if($data->fixedVideo != ''){
+	if (isset($service->fixedVideo)) {
+		if($service->fixedVideo != ''){
 			$fileName = $service->serviceId.'_fix';
-			$imgUpload = imageUploadToDisk($data->fixedVideo,$fixedVideoPath,$fileName);
+			$imgUpload = imageUploadToDisk($service->fixedVideo,$fixedVideoPath,$fileName);
 			if ($imgUpload) {			
 				$service->fixedVideoPath = $imgUpload;
 				$service->UpdateFixedVideoPath();
