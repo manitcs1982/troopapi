@@ -75,7 +75,7 @@ if(count($data)===$loopCount){
 	$service->customerDisplayTotal = $customerDisplayPrice;
 	$service->modifiedOn = htmlspecialchars(strip_tags(date('Y/m/d H:i:s', time())));
 	
-	$serviceDefectsArray[0]->customerGrandTotal = $service->customerGrandTotal;
+	$serviceDefectsArray[0]->customerGrandTotal = round($service->customerGrandTotal,2);
 	$result = $service->UpdateServiceAmount();
 	
   echo json_encode($serviceDefectsArray); //converting the output data into JSON
