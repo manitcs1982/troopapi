@@ -60,6 +60,7 @@ class Service{
 		public $endtime;		
 		public $amount;		
 		public $discountAmount;
+		public $customerGrandTotal;
 
 		public $error;
 		
@@ -599,7 +600,7 @@ class Service{
 
 			try {
 
-				$sql = "Update Service Set SVC_VDR_GFK=:vendorId,SVC_LGT_GFK=:logisticsId,SVC_modifiedOn=:modifiedOn,SVC_logisticsName=:logisticsName,SVC_logisticsPhoneNumber=:logisticsPhoneNumber,SVC_vendorBusinessOwnerName=:vendorBusinessOwnerName,SVC_vendorBusinessName=:vendorBusinessName,SVC_vendorPhoneNumber=:vendorPhoneNumber,SVC_modifiedOn=:modifiedOn,SVC_statusDescription=:statusDescription,SVC_statusNativeDescription=:statusNativeDescription where SVC_GPK=:serviceId";
+				$sql = "Update Service Set SVC_VDR_GFK=:vendorId,SVC_LGT_GFK=:logisticsId,SVC_modifiedOn=:modifiedOn,SVC_logisticsName=:logisticsName,SVC_logisticsPhoneNumber=:logisticsPhoneNumber,SVC_vendorBusinessOwnerName=:vendorBusinessOwnerName,SVC_vendorBusinessName=:vendorBusinessName,SVC_vendorPhoneNumber=:vendorPhoneNumber,SVC_modifiedOn=:modifiedOn where SVC_GPK=:serviceId";
 				//SVC_CST_GFK=:customerId,SVC_CSP_GFK=:customerProductId,SVC_PDM_GFK=:productId,SVC_ADR_GFK=:customerAddressId,SVC_serviceCharge=:serviceCharge,SVC_otp=:otp,SVC_randomNumber=:randomNumber,SVC_status=:status,SVC_customerTotal=:customerTotal,SVC_vendorTotal=:vendorTotal,SVC_pickUpDate=:pickUpDate,SVC_pickUpSlot=:pickUpSlot,SVC_notes=:notes,SVC_dropDate=:dropDate,SVC_dropSlot=:dropSlot
 				$result = $this->conn->prepare($sql);
 				//$this->customerId=htmlspecialchars(strip_tags($this->customerId));
