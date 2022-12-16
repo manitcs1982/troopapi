@@ -33,6 +33,8 @@
  $testScheduleSlot = "Morning";
  $testScheduleDate = '2020-12-31';
  
+ $deliveryFeeConfig = "70.8";
+ 
  //Firebase Notification
  $customerApiKey = "AAAAuPOGh1k:APA91bFhZSLShbbq2rgNK2ROeRdjP82xZR-JQw0rWgNtOfGGCLn4dGku9PjQgk71ze92jcDw52zxGD7DjjkJgMb245Jc9OvTr7bMH1knWKw6YpKO1WlVgpSseFOFVZ5Wh5fznKZqa1U3";
  $logisticsApiKey = "AAAADq0v18A:APA91bHC4KL7eKfwXVzQkLatQQYgt8qrHPq0pVyLiw6fQ7ttm7KtA9AbZUIt1vqtUDJjLxya5hMdItFTEPAkAzaVgJBZBK6B6FEm0uFUnpZMUE7Yjl_B8hsWWnfFpJEQ5PL0SqnOqXmN";
